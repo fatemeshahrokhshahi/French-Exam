@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FrançaisExam — A2 Hazırlık Platformu</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a1a2e;
+  --paper: #f8f5ef;
+  --cream: #fdfbf7;
+  --accent: #c0392b;
+  --gold: #c8963c;
+  --blue: #2c5f8a;
+  --green: #2d6a4f;
+  --muted: #7a7065;
+  --border: #e0d8cc;
+  --card: #ffffff;
+  --light: #f2ede4;
+  --navy: #1a2744;
+  --tag-fr: #2c5f8a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Instrument Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;}
+
+/* ══ SCREENS ══ */
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* ══ LANDING ══ */
+#landing{background:var(--ink);min-height:100vh;display:none;}
+#landing.active{display:flex;flex-direction:column;}
+.land-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;border-bottom:1px solid rgba(255,255,255,.08);}
+.logo{font-family:'Fraunces',serif;font-size:1.4rem;color:#fff;letter-spacing:.5px;}
+.logo span{color:var(--gold);}
+.lang-toggle{display:flex;gap:4px;background:rgba(255,255,255,.08);border-radius:20px;padding:4px;}
+.lang-btn{padding:5px 14px;border-radius:16px;border:none;background:transparent;color:rgba(255,255,255,.5);font-size:.8rem;cursor:pointer;font-family:'Instrument Sans',sans-serif;font-weight:500;transition:all .2s;}
+.lang-btn.active{background:var(--gold);color:var(--ink);}
+.land-hero{flex:1;display:flex;align-items:center;justify-content:center;padding:60px 40px;text-align:center;}
+.land-inner{max-width:560px;}
+.flag{display:flex;border-radius:6px;overflow:hidden;width:72px;height:48px;margin:0 auto 36px;box-shadow:0 8px 32px rgba(0,0,0,.4);}
+.flag-b{flex:1;}
+.fb-bl{background:#002395;}
+.fb-wh{background:#fff;}
+.fb-rd{background:#ED2939;}
+.land-title{font-family:'Fraunces',serif;font-size:clamp(2.2rem,5vw,3.8rem);color:#fff;line-height:1.1;margin-bottom:16px;font-weight:600;}
+.land-title em{color:var(--gold);font-style:italic;}
+.land-sub{font-size:.95rem;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:48px;}
+.land-features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:40px;}
+.land-feat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:16px 12px;}
+.land-feat-icon{font-size:1.4rem;margin-bottom:8px;}
+.land-feat-label{font-size:.78rem;color:rgba(255,255,255,.6);line-height:1.5;}
+.land-price{background:rgba(200,150,60,.12);border:1px solid rgba(200,150,60,.3);border-radius:12px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;}
+.land-price-num{font-family:'Fraunces',serif;font-size:2rem;color:var(--gold);}
+.land-price-desc{font-size:.8rem;color:rgba(255,255,255,.4);text-align:right;line-height:1.6;}
+.btn-enter{width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:'Instrument Sans',sans-serif;font-size:1rem;font-weight:600;letter-spacing:.5px;cursor:pointer;transition:all .2s;}
+.btn-enter:hover{background:#a93226;transform:translateY(-1px);}
+.land-note{margin-top:16px;font-size:.75rem;color:rgba(255,255,255,.25);line-height:1.6;}
+
+/* ══ AUTH SCREEN ══ */
+#auth-screen{background:var(--ink);min-height:100vh;display:none;align-items:center;justify-content:center;padding:40px 20px;}
+#auth-screen.show{display:flex;}
+.auth-box{background:var(--cream);border-radius:16px;padding:40px;max-width:420px;width:100%;position:relative;}
+.auth-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);}
+.auth-logo{font-family:'Fraunces',serif;font-size:1.2rem;text-align:center;margin-bottom:24px;color:var(--ink);}
+.auth-logo span{color:var(--gold);}
+.auth-tabs{display:flex;gap:2px;background:var(--light);border-radius:8px;padding:3px;margin-bottom:24px;}
+.auth-tab{flex:1;padding:9px;text-align:center;border-radius:6px;border:none;background:transparent;font-family:'Instrument Sans',sans-serif;font-size:.87rem;cursor:pointer;color:var(--muted);transition:all .2s;}
+.auth-tab.active{background:#fff;color:var(--ink);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.auth-form{display:flex;flex-direction:column;gap:12px;}
+.auth-label{font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:4px;display:block;letter-spacing:.5px;text-transform:uppercase;}
+.auth-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Instrument Sans',sans-serif;font-size:.93rem;color:var(--ink);background:#fff;transition:border .2s;}
+.auth-input:focus{outline:none;border-color:var(--gold);}
+.auth-submit{padding:13px;background:var(--ink);color:#fff;border:none;border-radius:8px;font-family:'Instrument Sans',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:background .2s;margin-top:4px;}
+.auth-submit:hover{background:#0f1a30;}
+.auth-note{font-size:.75rem;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6;}
+.auth-err{font-size:.82rem;color:var(--accent);text-align:center;padding:8px 12px;background:#fdf0ec;border-radius:6px;}
+
+/* ══ MAIN APP ══ */
+#app{display:none;}
+#app.active{display:block;}
+.app-nav{background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:14px 32px;position:sticky;top:0;z-index:500;}
+.app-logo{font-family:'Fraunces',serif;font-size:1.1rem;color:#fff;}
+.app-logo span{color:var(--gold);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-user{font-size:.82rem;color:rgba(255,255,255,.5);}
+.nav-btn{padding:6px 14px;border-radius:6px;border:1px solid rgba(255,255,255,.15);background:transparent;color:rgba(255,255,255,.7);font-size:.8rem;cursor:pointer;font-family:'Instrument Sans',sans-serif;transition:all .2s;}
+.nav-btn:hover{background:rgba(255,255,255,.08);}
+.nav-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+/* ══ TAB NAVIGATION ══ */
+.app-tabs{background:#fff;border-bottom:1px solid var(--border);display:flex;padding:0 32px;}
+.app-tab{padding:14px 18px;border-bottom:2px solid transparent;color:var(--muted);font-size:.87rem;cursor:pointer;white-space:nowrap;transition:all .2s;font-weight:500;}
+.app-tab.active{border-bottom-color:var(--accent);color:var(--ink);font-weight:600;}
+.tab-pane{display:none;padding:28px 32px;max-width:900px;margin:0 auto;}
+.tab-pane.active{display:block;}
+
+/* ══ DASHBOARD ══ */
+.dash-welcome{margin-bottom:28px;}
+.dash-welcome h2{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:600;color:var(--ink);}
+.dash-welcome p{color:var(--muted);font-size:.9rem;margin-top:4px;}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
+.stat-card{background:var(--light);border-radius:10px;padding:16px;text-align:center;}
+.stat-num{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:600;color:var(--ink);}
+.stat-num.red{color:var(--accent);}
+.stat-num.green{color:var(--green);}
+.stat-label{font-size:.75rem;color:var(--muted);margin-top:2px;}
+.section-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;margin-bottom:16px;color:var(--ink);}
+.exam-cards{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+.exam-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.exam-card-info{}
+.exam-card-title{font-size:.97rem;font-weight:600;color:var(--ink);}
+.exam-card-meta{font-size:.8rem;color:var(--muted);margin-top:3px;}
+.exam-card-score{display:flex;align-items:center;gap:12px;}
+.score-ring-sm{width:44px;height:44px;position:relative;}
+.score-ring-sm svg{transform:rotate(-90deg);}
+.score-ring-sm .score-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--ink);}
+.btn-exam{padding:9px 18px;border-radius:8px;border:none;background:var(--ink);color:#fff;font-family:'Instrument Sans',sans-serif;font-size:.83rem;font-weight:600;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.btn-exam:hover{background:#0f1a30;}
+.btn-exam.secondary{background:var(--light);color:var(--ink);}
+.btn-exam.secondary:hover{background:var(--border);}
+.prep-banner{background:linear-gradient(135deg,#1a2744,#2c3e6b);border-radius:12px;padding:24px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.prep-banner-text h3{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;margin-bottom:4px;}
+.prep-banner-text p{font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.6;}
+.btn-prep{padding:10px 20px;border-radius:8px;border:none;background:var(--gold);color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;}
+.btn-prep:hover{background:#b5841f;}
+
+/* ══ EXAM SCREEN ══ */
+.exam-header{background:var(--ink);color:#fff;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:61px;z-index:400;}
+.exam-header-title{font-family:'Fraunces',serif;font-size:1rem;}
+.exam-timer{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--gold);letter-spacing:2px;}
+.exam-timer.warn{color:#e74c3c;}
+.exam-progress{height:4px;background:rgba(255,255,255,.1);}
+.exam-progress-fill{height:100%;background:var(--gold);transition:width .3s;width:0%;}
+.exam-body{padding:28px 32px;max-width:860px;margin:0 auto;}
+.exam-score-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:5px 14px;font-size:.8rem;color:rgba(255,255,255,.7);}
+
+.part-hdr{display:flex;align-items:center;gap:16px;margin:32px 0 20px;padding-bottom:12px;border-bottom:2px solid var(--ink);}
+.part-hdr:first-child{margin-top:0;}
+.part-circle{width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;font-family:'Fraunces',serif;font-size:1.2rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.part-hdr-info h3{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;}
+.part-hdr-info p{font-size:.78rem;color:var(--muted);margin-top:2px;}
+.part-pts{margin-left:auto;font-size:.78rem;font-weight:700;color:var(--accent);background:rgba(192,57,43,.08);padding:4px 10px;border-radius:20px;}
+
+.q-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:12px;transition:border-color .2s;}
+.q-num-lbl{font-size:.7rem;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.q-num-lbl span{background:var(--accent);color:#fff;padding:2px 7px;border-radius:10px;font-size:.68rem;margin-right:6px;}
+.q-text{font-size:.95rem;line-height:1.65;margin-bottom:12px;}
+.opts{display:flex;flex-direction:column;gap:7px;}
+.opt{display:flex;align-items:center;gap:10px;padding:9px 13px;border:1.5px solid var(--border);border-radius:7px;cursor:pointer;font-size:.9rem;transition:all .15s;user-select:none;}
+.opt:hover{border-color:var(--gold);background:#fdf8ee;}
+.opt input[type=radio]{accent-color:var(--ink);flex-shrink:0;}
+.opt.correct{border-color:var(--green);background:#edf7f1;color:var(--green);}
+.opt.wrong{border-color:var(--accent);background:#fdf0ec;color:var(--accent);}
+.q-fb{margin-top:8px;font-size:.82rem;padding:7px 12px;border-radius:5px;display:none;}
+.q-fb.show{display:block;}
+.q-fb.ok{background:#edf7f1;color:#1e6845;border-left:3px solid var(--green);}
+.q-fb.no{background:#fdf0ec;color:#8b2500;border-left:3px solid var(--accent);}
+
+input.blank{border:none;border-bottom:2px solid var(--gold);background:transparent;padding:2px 6px;min-width:110px;font-family:'Instrument Sans',sans-serif;font-size:.93rem;color:var(--ink);text-align:center;transition:border-color .2s;}
+input.blank:focus{outline:none;border-bottom-color:var(--ink);}
+input.blank.correct{border-bottom-color:var(--green);background:#edf7f1;color:var(--green);}
+input.blank.wrong{border-bottom-color:var(--accent);background:#fdf0ec;color:var(--accent);}
+.fill-hint{font-size:.75rem;color:var(--muted);font-style:italic;margin-top:4px;}
+
+.read-passage{background:var(--light);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px;font-size:.93rem;line-height:1.9;}
+.read-passage h4{font-family:'Fraunces',serif;font-size:1.1rem;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+textarea.write-area{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'Instrument Sans',sans-serif;font-size:.9rem;color:var(--ink);resize:vertical;background:#fff;line-height:1.7;transition:border .2s;min-height:100px;}
+textarea.write-area:focus{outline:none;border-color:var(--gold);}
+.write-hint-box{font-size:.78rem;color:var(--muted);font-style:italic;margin-top:6px;}
+
+.section-check-row{display:flex;justify-content:flex-end;margin:8px 0 20px;}
+.btn-check{padding:10px 22px;border-radius:8px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn-check:hover{background:var(--ink);color:#fff;}
+.submit-row{display:flex;justify-content:center;margin:32px 0;}
+.btn-submit-exam{padding:14px 48px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:'Instrument Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:background .2s;}
+.btn-submit-exam:hover{background:#a93226;}
+
+/* RESULTS */
+.results-panel{background:var(--ink);color:#fff;border-radius:14px;padding:36px;margin-top:32px;text-align:center;}
+.results-panel h2{font-family:'Fraunces',serif;font-size:1.8rem;margin-bottom:4px;}
+.results-sub{font-size:.83rem;color:rgba(255,255,255,.4);margin-bottom:28px;}
+.big-score{font-family:'Fraunces',serif;font-size:5rem;color:var(--gold);line-height:1;}
+.big-score-of{font-size:.85rem;color:rgba(255,255,255,.4);margin-top:4px;margin-bottom:16px;}
+.verdict-label{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--gold);margin-bottom:8px;}
+.verdict-msg{font-size:.88rem;color:rgba(255,255,255,.55);line-height:1.7;max-width:440px;margin:0 auto 28px;}
+.results-breakdown{background:rgba(255,255,255,.05);border-radius:10px;padding:20px;margin-bottom:24px;text-align:left;}
+.res-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:.87rem;}
+.res-row:last-child{border-bottom:none;font-weight:700;color:var(--gold);}
+.btn-retry{padding:11px 28px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:#fff;font-family:'Instrument Sans',sans-serif;font-size:.87rem;cursor:pointer;margin-right:8px;}
+.btn-dash{padding:11px 28px;background:var(--gold);border:none;border-radius:8px;color:var(--ink);font-family:'Instrument Sans',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;}
+
+/* ══ MISTAKES TAB ══ */
+.mistake-filters{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.filter-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:#fff;font-size:.8rem;cursor:pointer;color:var(--muted);transition:all .2s;}
+.filter-btn.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.mistake-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:12px;}
+.mistake-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;}
+.mistake-badge{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:10px;white-space:nowrap;}
+.mb-red{background:#fdf0ec;color:var(--accent);}
+.mb-amber{background:#fef9ec;color:#854F0B;}
+.mb-purple{background:#eeedfe;color:#3C3489;}
+.mistake-q{font-size:.9rem;color:var(--ink);line-height:1.55;}
+.mistake-answers{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.ma-box{border-radius:7px;padding:8px 12px;}
+.ma-label{font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+.ma-wrong{background:#fdf0ec;color:var(--accent);}
+.ma-wrong .ma-label{color:rgba(192,57,43,.6);}
+.ma-correct{background:#edf7f1;color:var(--green);}
+.ma-correct .ma-label{color:rgba(45,106,79,.6);}
+.ma-val{font-size:.88rem;font-weight:600;}
+.mistake-tip{font-size:.78rem;color:var(--muted);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted);}
+.empty-state-icon{font-size:3rem;margin-bottom:12px;}
+.empty-state p{font-size:.9rem;line-height:1.7;}
+
+/* ══ PREP TAB ══ */
+.prep-hero{background:linear-gradient(135deg,var(--navy),#2c3e6b);border-radius:14px;padding:28px;color:#fff;margin-bottom:24px;}
+.prep-hero h2{font-family:'Fraunces',serif;font-size:1.4rem;margin-bottom:6px;}
+.prep-hero p{font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.7;}
+.prep-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px;}
+.prep-stat{background:rgba(255,255,255,.07);border-radius:8px;padding:12px;text-align:center;}
+.prep-stat-num{font-family:'Fraunces',serif;font-size:1.6rem;color:var(--gold);}
+.prep-stat-lbl{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:2px;}
+.prep-section-title{font-family:'Fraunces',serif;font-size:1rem;margin-bottom:14px;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.prep-priority{font-size:.72rem;background:var(--accent);color:#fff;padding:2px 8px;border-radius:10px;}
+
+/* ══ SCORE TAB ══ */
+.history-empty{text-align:center;padding:60px 20px;color:var(--muted);}
+.history-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:10px;display:flex;align-items:center;gap:16px;}
+.history-score{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:600;min-width:60px;text-align:center;}
+.history-score.good{color:var(--green);}
+.history-score.mid{color:var(--gold);}
+.history-score.low{color:var(--accent);}
+.history-info{flex:1;}
+.history-exam{font-size:.9rem;font-weight:600;color:var(--ink);}
+.history-date{font-size:.78rem;color:var(--muted);margin-top:2px;}
+.history-sections{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.history-sec{font-size:.7rem;background:var(--light);padding:3px 8px;border-radius:8px;color:var(--muted);}
+.progress-bar-small{height:5px;background:var(--light);border-radius:3px;overflow:hidden;flex:1;}
+.progress-bar-small-fill{height:100%;border-radius:3px;transition:width .5s;}
+
+/* ══ TRANSLATIONS ══ */
+[data-tr]{display:none;}
+[data-en]{display:none;}
+.lang-tr [data-tr]{display:inline;}
+.lang-en [data-en]{display:inline;}
+.lang-tr [data-tr-block]{display:block;}
+.lang-en [data-en-block]{display:block;}
+[data-tr-block]{display:none;}
+[data-en-block]{display:none;}
+</style>
+</head>
+<body class="lang-tr">
+
+<!-- ══ LANDING ══ -->
+<div id="landing" class="screen active">
+  <nav class="land-nav">
+    <div class="logo"><span>Français</span>Exam</div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="land-lang-tr">🇹🇷 TR</button>
+      <button class="lang-btn" id="land-lang-en">🇬🇧 EN</button>
+    </div>
+  </nav>
+  <div class="land-hero">
+    <div class="land-inner">
+      <div class="flag"><div class="flag-b fb-bl"></div><div class="flag-b fb-wh"></div><div class="flag-b fb-rd"></div></div>
+      <h1 class="land-title">
+        <span data-tr>Fransızca sınavına <em>gerçek sorularla</em> hazırlan</span>
+        <span data-en>Prepare for French exams <em>with real questions</em></span>
+      </h1>
+      <p class="land-sub">
+        <span data-tr>A2 seviyesi sınav soruları, hata takipçisi ve 1 günlük yoğun hazırlık modu. Profesörünüzün önerdiği platform.</span>
+        <span data-en>A2 level exam questions, mistake tracker, and 1-day intensive prep mode. The platform your professor recommends.</span>
+      </p>
+      <div class="land-features">
+        <div class="land-feat">
+          <div class="land-feat-icon">📝</div>
+          <div class="land-feat-label"><span data-tr>2 Tam A2 Sınavı</span><span data-en>2 Full A2 Exams</span></div>
+        </div>
+        <div class="land-feat">
+          <div class="land-feat-icon">🎯</div>
+          <div class="land-feat-label"><span data-tr>Hata Takipçisi</span><span data-en>Mistake Tracker</span></div>
+        </div>
+        <div class="land-feat">
+          <div class="land-feat-icon">⚡</div>
+          <div class="land-feat-label"><span data-tr>1 Günlük Hazırlık Modu</span><span data-en>1-Day Prep Mode</span></div>
+        </div>
+      </div>
+      <div class="land-price">
+        <div>
+          <div class="land-price-num">500 ₺</div>
+          <div style="font-size:.78rem;color:rgba(255,255,255,.35);margin-top:2px;"><span data-tr>dönemlik erişim</span><span data-en>per semester access</span></div>
+        </div>
+        <div class="land-price-desc">
+          <span data-tr>B1, B2 seviyeleri<br>yakında geliyor</span>
+          <span data-en>B1, B2 levels<br>coming soon</span>
+        </div>
+      </div>
+      <button class="btn-enter" id="btn-enter-app">
+        <span data-tr>Giriş Yap / Kayıt Ol</span>
+        <span data-en>Login / Sign Up</span>
+      </button>
+      <p class="land-note"><span data-tr>Demo modunda tüm özellikler açık — gerçek kullanımda abonelik gereklidir.</span><span data-en>All features unlocked in demo mode — subscription required for real use.</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AUTH SCREEN ══ -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <button class="auth-close" id="btn-auth-close">←</button>
+    <div class="auth-logo"><span>Français</span>Exam</div>
+
+    <!-- Normal auth UI -->
+    <div id="auth-normal">
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchAuthTab('login')" id="tab-login">
+          <span data-tr>Giriş Yap</span><span data-en>Login</span>
+        </button>
+        <button class="auth-tab" onclick="switchAuthTab('register')" id="tab-register">
+          <span data-tr>Kayıt Ol</span><span data-en>Sign Up</span>
+        </button>
+      </div>
+      <div id="auth-err" class="auth-err" style="display:none;margin-bottom:12px;"></div>
+
+      <!-- LOGIN FORM — real <form> for password manager -->
+      <form id="form-login" class="auth-form" autocomplete="on" onsubmit="doLogin(event)">
+        <div>
+          <label class="auth-label" for="login-email"><span data-tr>E-posta</span><span data-en>Email</span></label>
+          <input class="auth-input" type="email" id="login-email" name="email" autocomplete="username" placeholder="you@example.com" required>
+        </div>
+        <div>
+          <label class="auth-label" for="login-pw"><span data-tr>Şifre</span><span data-en>Password</span></label>
+          <input class="auth-input" type="password" id="login-pw" name="password" autocomplete="current-password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="auth-submit">
+          <span data-tr>Giriş Yap</span><span data-en>Login</span>
+        </button>
+      </form>
+
+      <!-- REGISTER FORM — real <form> for password manager -->
+      <form id="form-register" class="auth-form" autocomplete="on" onsubmit="doRegister(event)" style="display:none;">
+        <div>
+          <label class="auth-label" for="reg-name"><span data-tr>Adınız</span><span data-en>Your Name</span></label>
+          <input class="auth-input" type="text" id="reg-name" name="name" autocomplete="name" placeholder="Ayşe Kaya" required>
+        </div>
+        <div>
+          <label class="auth-label" for="reg-email"><span data-tr>E-posta</span><span data-en>Email</span></label>
+          <input class="auth-input" type="email" id="reg-email" name="email" autocomplete="username" placeholder="you@example.com" required>
+        </div>
+        <div>
+          <label class="auth-label" for="reg-pw"><span data-tr>Şifre</span><span data-en>Password</span></label>
+          <input class="auth-input" type="password" id="reg-pw" name="password" autocomplete="new-password" placeholder="min. 8 karakter" required minlength="8">
+          <div id="pw-strength" style="margin-top:6px;font-size:.75rem;"></div>
+        </div>
+        <button type="submit" class="auth-submit" id="reg-submit">
+          <span data-tr>Hesap Oluştur</span><span data-en>Create Account</span>
+        </button>
+        <p class="auth-note"><span data-tr>Kayıt ücretsizdir.</span><span data-en>Registration is free.</span></p>
+      </form>
+    </div>
+
+    <!-- Check email state — shown after register -->
+    <div id="auth-check-email" style="display:none;text-align:center;padding:8px 0;">
+      <div style="font-size:3rem;margin-bottom:16px;">📬</div>
+      <h3 style="font-family:'Fraunces',serif;font-size:1.2rem;margin-bottom:10px;color:var(--ink);">
+        <span data-tr>E-postanızı kontrol edin</span><span data-en>Check your email</span>
+      </h3>
+      <p style="font-size:.87rem;color:var(--muted);line-height:1.7;margin-bottom:20px;">
+        <span data-tr>Onay bağlantısı <strong id="confirm-email-addr"></strong> adresine gönderildi. Bağlantıya tıkladıktan sonra buraya dönün.</span>
+        <span data-en>A confirmation link was sent to <strong id="confirm-email-addr2"></strong>. Click it then come back here.</span>
+      </p>
+      <button class="auth-submit" onclick="switchAuthTab('login');document.getElementById('auth-check-email').style.display='none';document.getElementById('auth-normal').style.display='block';">
+        <span data-tr>Onayladım, Giriş Yap</span><span data-en>Confirmed, Log In</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+
+<div id="app">
+  <nav class="app-nav">
+    <div class="app-logo"><span>Français</span>Exam</div>
+    <div class="nav-right">
+      <div class="lang-toggle" style="border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:3px;">
+        <button class="lang-btn active" id="app-lang-tr" onclick="setLang('tr')" style="font-size:.72rem;padding:4px 10px;">🇹🇷 TR</button>
+        <button class="lang-btn" id="app-lang-en" onclick="setLang('en')" style="font-size:.72rem;padding:4px 10px;">🇬🇧 EN</button>
+      </div>
+      <span class="nav-user" id="nav-username"></span>
+      <button class="nav-btn" id="btn-logout"><span data-tr>Çıkış</span><span data-en>Logout</span></button>
+    </div>
+  </nav>
+  <div class="app-tabs">
+    <div class="app-tab active" onclick="switchTab('dashboard')"><span data-tr>Panel</span><span data-en>Dashboard</span></div>
+    <div class="app-tab" onclick="switchTab('exams')"><span data-tr>Sınavlar</span><span data-en>Exams</span></div>
+    <div class="app-tab" onclick="switchTab('mistakes')"><span data-tr>Hatalarım</span><span data-en>My Mistakes</span></div>
+    <div class="app-tab" onclick="switchTab('prep')"><span data-tr>1 Günlük Hazırlık</span><span data-en>1-Day Prep</span></div>
+    <div class="app-tab" onclick="switchTab('scores')"><span data-tr>Puanlarım</span><span data-en>My Scores</span></div>
+  </div>
+
+  <!-- DASHBOARD TAB -->
+  <div class="tab-pane active" id="tab-dashboard">
+    <div class="dash-welcome">
+      <h2 id="dash-greeting">👋</h2>
+      <p><span data-tr>Bugün ne çalışmak istersiniz?</span><span data-en>What would you like to study today?</span></p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-num" id="stat-exams">0</div><div class="stat-label"><span data-tr>Girilen Sınav</span><span data-en>Exams Taken</span></div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-avg">—</div><div class="stat-label"><span data-tr>Ortalama Puan</span><span data-en>Avg. Score</span></div></div>
+      <div class="stat-card"><div class="stat-num red" id="stat-mistakes">0</div><div class="stat-label"><span data-tr>Kayıtlı Hata</span><span data-en>Logged Mistakes</span></div></div>
+      <div class="stat-card"><div class="stat-num green" id="stat-best">—</div><div class="stat-label"><span data-tr>En İyi Puan</span><span data-en>Best Score</span></div></div>
+    </div>
+    <p class="section-title"><span data-tr>Mevcut Sınavlar</span><span data-en>Available Exams</span></p>
+    <div class="exam-cards">
+      <div class="exam-card">
+        <div class="exam-card-info">
+          <div class="exam-card-title">DELF A2 — Sınav 1 (Nouveau Taxi)</div>
+          <div class="exam-card-meta"><span data-tr>35 soru · 4 bölüm · 60 dakika</span><span data-en>35 questions · 4 sections · 60 min</span></div>
+        </div>
+        <div class="exam-card-score">
+          <button class="btn-exam" onclick="startExam(1)"><span data-tr>Başla</span><span data-en>Start</span></button>
+        </div>
+      </div>
+      <div class="exam-card">
+        <div class="exam-card-info">
+          <div class="exam-card-title">DELF A2 — Sınav 2 (Nouveau Taxi)</div>
+          <div class="exam-card-meta"><span data-tr>80 soru · 4 bölüm · 60 dakika</span><span data-en>80 questions · 4 sections · 60 min</span></div>
+        </div>
+        <div class="exam-card-score">
+          <button class="btn-exam" onclick="startExam(2)"><span data-tr>Başla</span><span data-en>Start</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="prep-banner">
+      <div class="prep-banner-text">
+        <h3>⚡ <span data-tr>Sınav 1 gün sonra mı?</span><span data-en>Exam in 1 day?</span></h3>
+        <p><span data-tr>Hatalarınıza göre kişiselleştirilmiş yoğun çalışma seansı başlatın.</span><span data-en>Start a personalized intensive session built from your mistakes.</span></p>
+      </div>
+      <button class="btn-prep" onclick="switchTab('prep')"><span data-tr>Hazırlığa Başla</span><span data-en>Start Prep</span></button>
+    </div>
+  </div>
+
+  <!-- EXAMS TAB -->
+  <div class="tab-pane" id="tab-exams">
+    <p class="section-title"><span data-tr>Sınav Seçin</span><span data-en>Choose an Exam</span></p>
+    <div class="exam-cards">
+      <div class="exam-card" style="flex-direction:column;align-items:flex-start;">
+        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:10px;">
+          <div>
+            <div class="exam-card-title">DELF A2 — Sınav 1</div>
+            <div class="exam-card-meta"><span data-tr>Dilbilgisi, Boşluk Doldurma, Okuma, Yazma</span><span data-en>Grammar, Fill-in-Blank, Reading, Writing</span></div>
+          </div>
+          <button class="btn-exam" onclick="startExam(1)"><span data-tr>Sınava Gir</span><span data-en>Take Exam</span></button>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="background:var(--light);font-size:.72rem;padding:3px 9px;border-radius:8px;color:var(--muted);">35 <span data-tr>soru</span><span data-en>questions</span></span>
+          <span style="background:var(--light);font-size:.72rem;padding:3px 9px;border-radius:8px;color:var(--muted);">60 <span data-tr>dk</span><span data-en>min</span></span>
+          <span style="background:var(--light);font-size:.72rem;padding:3px 9px;border-radius:8px;color:var(--muted);">QCM + <span data-tr>Boşluk</span><span data-en>Fill</span></span>
+        </div>
+      </div>
+      <div class="exam-card" style="flex-direction:column;align-items:flex-start;">
+        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:10px;">
+          <div>
+            <div class="exam-card-title">DELF A2 — Sınav 2</div>
+            <div class="exam-card-meta"><span data-tr>Kelime, Dilbilgisi, Okuma (Barselona e-postası), Yazma</span><span data-en>Vocabulary, Grammar, Reading (Barcelona email), Writing</span></div>
+          </div>
+          <button class="btn-exam" onclick="startExam(2)"><span data-tr>Sınava Gir</span><span data-en>Take Exam</span></button>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <span style="background:var(--light);font-size:.72rem;padding:3px 9px;border-radius:8px;color:var(--muted);">80 <span data-tr>soru</span><span data-en>questions</span></span>
+          <span style="background:var(--light);font-size:.72rem;padding:3px 9px;border-radius:8px;color:var(--muted);">60 <span data-tr>dk</span><span data-en>min</span></span>
+          <span style="background:var(--light);font-size:.72rem;padding:3px 9px;border-radius:8px;color:var(--muted);">QCM + <span data-tr>Boşluk + Okuma</span><span data-en>Fill + Reading</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MISTAKES TAB -->
+  <div class="tab-pane" id="tab-mistakes">
+    <p class="section-title"><span data-tr>Kayıtlı Hatalarım</span><span data-en>My Logged Mistakes</span></p>
+    <div class="mistake-filters">
+      <button class="filter-btn active" onclick="filterMistakes('all')"><span data-tr>Tümü</span><span data-en>All</span></button>
+      <button class="filter-btn" onclick="filterMistakes('grammar')"><span data-tr>Dilbilgisi</span><span data-en>Grammar</span></button>
+      <button class="filter-btn" onclick="filterMistakes('vocab')"><span data-tr>Kelime</span><span data-en>Vocabulary</span></button>
+      <button class="filter-btn" onclick="filterMistakes('fill')"><span data-tr>Boşluk</span><span data-en>Fill-in</span></button>
+      <button class="filter-btn" onclick="filterMistakes('reading')"><span data-tr>Okuma</span><span data-en>Reading</span></button>
+    </div>
+    <div id="mistakes-list"></div>
+  </div>
+
+  <!-- PREP TAB -->
+  <div class="tab-pane" id="tab-prep">
+    <div class="prep-hero">
+      <h2>⚡ <span data-tr>1 Günlük Yoğun Hazırlık</span><span data-en>1-Day Intensive Prep</span></h2>
+      <p><span data-tr>Sınav hatalarınıza bakılarak en kritik konular önceliklendiriliyor. En çok hata yaptığınız yerlerden başlayın.</span><span data-en>Your most critical topics are prioritized based on your exam mistakes. Start where you make the most errors.</span></p>
+      <div class="prep-stats">
+        <div class="prep-stat"><div class="prep-stat-num" id="prep-total-mistakes">0</div><div class="prep-stat-lbl"><span data-tr>Toplam Hata</span><span data-en>Total Mistakes</span></div></div>
+        <div class="prep-stat"><div class="prep-stat-num" id="prep-top-topic">—</div><div class="prep-stat-lbl"><span data-tr>En Zayıf Konu</span><span data-en>Weakest Topic</span></div></div>
+        <div class="prep-stat"><div class="prep-stat-num" id="prep-exams-done">0</div><div class="prep-stat-lbl"><span data-tr>Tamamlanan Sınav</span><span data-en>Exams Done</span></div></div>
+      </div>
+    </div>
+    <div id="prep-list"></div>
+  </div>
+
+  <!-- SCORES TAB -->
+  <div class="tab-pane" id="tab-scores">
+    <p class="section-title"><span data-tr>Sınav Geçmişim</span><span data-en>My Exam History</span></p>
+    <div id="scores-list"></div>
+  </div>
+
+  <!-- ACTIVE EXAM AREA -->
+  <div id="exam-area" style="display:none;">
+    <div class="exam-header">
+      <div class="exam-header-title" id="exam-title-bar">DELF A2</div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="exam-score-pill" id="live-score-pill">0 pts</span>
+        <span class="exam-timer" id="exam-timer">60:00</span>
+        <button class="nav-btn" onclick="exitExam()"><span data-tr>Çık</span><span data-en>Exit</span></button>
+      </div>
+    </div>
+    <div class="exam-progress"><div class="exam-progress-fill" id="exam-progress-fill"></div></div>
+    <div class="exam-body" id="exam-body"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ═══════════════ SUPABASE ═══════════════
+const SUPABASE_URL = 'https://rjwuibsvrdlqrouamsnt.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqd3VpYnN2cmRscXJvdWFtc250Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzcyMTEsImV4cCI6MjA5NDc1MzIxMX0.T4eL3ulFEUqZ1GRpq40DVrfiSyt8a-VnperU8XAkN4Y';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ═══════════════ STATE ═══════════════
+let currentUser = null;   // { id, email, name }
+let localMistakes = [];   // cached from DB
+let localScores = [];     // cached from DB
+let currentLang = 'tr';
+let currentExam = null;
+let examTimer = null;
+let examTimeLeft = 3600;
+let examScores = {};
+let examDone = {};
+let liveScore = 0;
+
+// ═══════════════ LANGUAGE ═══════════════
+function setLang(l) {
+  currentLang = l;
+  document.body.classList.toggle('lang-tr', l==='tr');
+  document.body.classList.toggle('lang-en', l==='en');
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  if(l==='tr') {
+    document.getElementById('land-lang-tr')?.classList.add('active');
+    document.getElementById('app-lang-tr')?.classList.add('active');
+  } else {
+    document.getElementById('land-lang-en')?.classList.add('active');
+    document.getElementById('app-lang-en')?.classList.add('active');
+  }
+  if(currentUser) renderAll();
+}
+
+// ═══════════════ AUTH ═══════════════
+function showAuth() {
+  document.getElementById('landing').style.display='none';
+  document.getElementById('landing').classList.remove('active');
+  document.getElementById('auth-screen').classList.add('show');
+}
+function hideAuth() {
+  document.getElementById('auth-screen').classList.remove('show');
+  document.getElementById('auth-err').style.display='none';
+  document.getElementById('landing').style.display='flex';
+  document.getElementById('landing').classList.add('active');
+}
+function switchAuthTab(t) {
+  document.getElementById('form-login').style.display = t==='login'?'flex':'none';
+  document.getElementById('form-register').style.display = t==='register'?'flex':'none';
+  document.getElementById('tab-login').classList.toggle('active', t==='login');
+  document.getElementById('tab-register').classList.toggle('active', t==='register');
+  document.getElementById('auth-err').style.display='none';
+}
+function showErr(msg) {
+  const el = document.getElementById('auth-err');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+async function doLogin(e) {
+  if(e) e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const pw = document.getElementById('login-pw').value;
+  if(!email||!pw){ showErr(currentLang==='tr'?'Tüm alanları doldurun.':'Fill all fields.'); return; }
+  showErr(currentLang==='tr'?'⏳ Giriş yapılıyor...':'⏳ Logging in...');
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pw });
+  if(error){
+    if(error.message.toLowerCase().includes('email not confirmed')){
+      showErr(currentLang==='tr'?'📬 E-postanızı henüz onaylamadınız. Gelen kutunuzu kontrol edin.':'📬 You haven\'t confirmed your email yet. Check your inbox.');
+    } else {
+      showErr(currentLang==='tr'?'❌ E-posta veya şifre hatalı.':'❌ Incorrect email or password.');
+    }
+    return;
+  }
+  const name = data.user.user_metadata?.full_name || email.split('@')[0];
+  await loginSuccess({ id: data.user.id, email, name });
+}
+
+async function doRegister(e) {
+  if(e) e.preventDefault();
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pw = document.getElementById('reg-pw').value;
+  if(!name||!email||!pw){ showErr(currentLang==='tr'?'Tüm alanları doldurun.':'Fill all fields.'); return; }
+  if(pw.length<8){ showErr(currentLang==='tr'?'❌ Şifre en az 8 karakter olmalı.':'❌ Password must be at least 8 characters.'); return; }
+  if(!/[A-Z]/.test(pw)&&!/[0-9]/.test(pw)){ showErr(currentLang==='tr'?'❌ Şifre en az bir büyük harf veya rakam içermeli.':'❌ Password must contain at least one uppercase letter or number.'); return; }
+  document.getElementById('reg-submit').disabled = true;
+  showErr(currentLang==='tr'?'⏳ Hesap oluşturuluyor...':'⏳ Creating account...');
+  const { data, error } = await sb.auth.signUp({
+    email, password: pw,
+    options: {
+      data: { full_name: name },
+      emailRedirectTo: 'https://fatemeshahrokhshahi.github.io/French-Exam/francaisexam.html'
+    }
+  });
+  document.getElementById('reg-submit').disabled = false;
+  if(error){ showErr('❌ '+error.message); return; }
+
+  // CASE 1: Email confirmation is OFF → session returned immediately → log in now
+  if(data.session) {
+    await loginSuccess({ id: data.user.id, email, name });
+    return;
+  }
+
+  // CASE 2: Email confirmation is ON → no session yet → show check-email screen
+  document.getElementById('confirm-email-addr').textContent = email;
+  document.getElementById('confirm-email-addr2').textContent = email;
+  document.getElementById('auth-normal').style.display = 'none';
+  document.getElementById('auth-check-email').style.display = 'block';
+  document.getElementById('auth-err').style.display = 'none';
+}
+
+async function loginSuccess(user) {
+  currentUser = user;
+  // Load user data from Supabase
+  const [mistakesRes, scoresRes] = await Promise.all([
+    sb.from('mistakes').select('*').eq('user_id', user.id).order('count', {ascending:false}),
+    sb.from('scores').select('*').eq('user_id', user.id).order('taken_at', {ascending:false})
+  ]);
+  localMistakes = mistakesRes.data || [];
+  localScores = scoresRes.data || [];
+  document.getElementById('auth-screen').classList.remove('show');
+  document.getElementById('landing').style.display='none';
+  document.getElementById('landing').classList.remove('active');
+  document.getElementById('app').style.display='block';
+  document.getElementById('nav-username').textContent = user.name;
+  renderAll();
+  switchTab('dashboard');
+}
+
+async function doLogout() {
+  await sb.auth.signOut();
+  currentUser = null;
+  localMistakes = [];
+  localScores = [];
+  document.getElementById('app').style.display='none';
+  document.getElementById('auth-screen').classList.remove('show');
+  document.getElementById('landing').style.display='flex';
+  document.getElementById('landing').classList.add('active');
+  exitExam();
+}
+
+// Password strength indicator
+function checkPwStrength() {
+  const pw = document.getElementById('reg-pw')?.value||'';
+  const el = document.getElementById('pw-strength');
+  if(!el||!pw) return;
+  let score=0, msg='', color='';
+  if(pw.length>=8) score++;
+  if(/[A-Z]/.test(pw)) score++;
+  if(/[0-9]/.test(pw)) score++;
+  if(/[^A-Za-z0-9]/.test(pw)) score++;
+  if(score<=1){msg=currentLang==='tr'?'🔴 Çok zayıf':'🔴 Too weak';color='#c0392b';}
+  else if(score===2){msg=currentLang==='tr'?'🟠 Zayıf':'🟠 Weak';color='#e67e22';}
+  else if(score===3){msg=currentLang==='tr'?'🟡 Orta':'🟡 Fair';color='#f1c40f';}
+  else{msg=currentLang==='tr'?'🟢 Güçlü':'🟢 Strong';color='#27ae60';}
+  el.style.color=color; el.textContent=msg;
+}
+
+// Resume session + handle email confirmation link
+async function checkSession() {
+  const hash = window.location.hash;
+  const params = new URLSearchParams(window.location.search);
+
+  // Error in URL (expired link etc.)
+  if(hash.includes('error=access_denied') || params.get('error')) {
+    window.location.hash = '';
+    showAuth();
+    showErr(currentLang==='tr'?'❌ Onay bağlantısının süresi dolmuş. Lütfen tekrar kayıt olun ve e-postayı 24 saat içinde onaylayın.':'❌ Confirmation link expired. Please register again and confirm your email within 24 hours.');
+    return;
+  }
+
+  // Supabase puts session in URL hash after email confirmation click
+  if(hash.includes('access_token') || hash.includes('type=signup') || hash.includes('type=magiclink')) {
+    // Let Supabase JS SDK parse the hash automatically
+    const { data, error } = await sb.auth.getSession();
+    if(!error && data.session) {
+      const user = data.session.user;
+      const name = user.user_metadata?.full_name || user.email.split('@')[0];
+      history.replaceState(null, '', window.location.pathname); // clean URL
+      await loginSuccess({ id: user.id, email: user.email, name });
+      return;
+    }
+  }
+
+  // Normal: restore existing session (user already logged in before)
+  const { data: { session } } = await sb.auth.getSession();
+  if(session) {
+    const user = session.user;
+    const name = user.user_metadata?.full_name || user.email.split('@')[0];
+    await loginSuccess({ id: user.id, email: user.email, name });
+  }
+}
+
+// ═══════════════ TABS ═══════════════
+function switchTab(name) {
+  document.querySelectorAll('.app-tab').forEach((t,i)=>{
+    const names=['dashboard','exams','mistakes','prep','scores'];
+    t.classList.toggle('active', names[i]===name);
+  });
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name)?.classList.add('active');
+  document.getElementById('exam-area').style.display='none';
+  if(examTimer){clearInterval(examTimer);examTimer=null;}
+  if(name==='mistakes') renderMistakes();
+  if(name==='prep') renderPrep();
+  if(name==='scores') renderScores();
+  if(name==='dashboard') renderDashboard();
+}
+
+// ═══════════════ DASHBOARD ═══════════════
+function renderDashboard() {
+  if(!currentUser) return;
+  const firstName = currentUser.name.split(' ')[0];
+  document.getElementById('dash-greeting').textContent =
+    currentLang==='tr' ? `Merhaba, ${firstName} 👋` : `Hello, ${firstName} 👋`;
+  document.getElementById('stat-exams').textContent = localScores.length;
+  document.getElementById('stat-mistakes').textContent = localMistakes.length;
+  if(localScores.length) {
+    const avg = Math.round(localScores.reduce((a,s)=>a+s.percentage,0)/localScores.length);
+    const best = Math.round(Math.max(...localScores.map(s=>s.percentage)));
+    document.getElementById('stat-avg').textContent = avg+'%';
+    document.getElementById('stat-best').textContent = best+'%';
+  } else {
+    document.getElementById('stat-avg').textContent='—';
+    document.getElementById('stat-best').textContent='—';
+  }
+}
+
+function renderAll() { renderDashboard(); }
+
+// ═══════════════ EXAM DATA ═══════════════
+const EXAM1 = {
+  id:1, title:'DELF A2 — Sınav 1', totalAuto:35,
+  sections:[
+    { key:'s1', label:{tr:'Bölüm 1: Dilbilgisi (QCM)',en:'Section 1: Grammar (MCQ)'}, pts:10, type:'mcq',
+      questions:[
+        {id:'q1',text:'Choisissez la bonne réponse : « ___ vous parlez français ? »',opts:['Est-ce que','Qu\'est-ce que','Comment est-ce'],ans:'a',cat:'grammar',
+         tip:{tr:'Est-ce que → evet/hayır sorusu kurar',en:'Est-ce que → forms yes/no questions'}},
+        {id:'q2',text:'Marie ___ (habiter) à Lyon depuis 2019.',opts:['habitait','habite','a habité'],ans:'b',cat:'grammar',
+         tip:{tr:'Depuis + şimdiki zaman = hâlâ devam eden eylem',en:'Depuis + présent = ongoing action'}},
+        {id:'q3',text:'Nous ___ (aller) au cinéma hier soir.',opts:['allons','sommes allés','allions'],ans:'b',cat:'grammar',
+         tip:{tr:'Geçmişte tamamlanan eylem → passé composé',en:'Completed past action → passé composé'}},
+        {id:'q4',text:'___ est ton livre préféré ?',opts:['Quel','Quelle','Quels'],ans:'a',cat:'grammar',
+         tip:{tr:'Livre eril → Quel (eril tekil)',en:'Livre is masculine → Quel (masc. sing.)'}},
+        {id:'q5',text:'Il y a beaucoup ___ étudiants dans la classe.',opts:['de','des','d\''],ans:'c',cat:'grammar',
+         tip:{tr:'Beaucoup de + isim (les/des düşer)',en:'Beaucoup de + noun (no article)'}},
+        {id:'q6',text:'Je ne mange ___ viande.',opts:['pas de','pas du','pas la'],ans:'a',cat:'grammar',
+         tip:{tr:'Olumsuzda du/de la/des → de olur',en:'After negation: du/de la/des → de'}},
+        {id:'q7',text:'___ heure est-il ? Il est midi.',opts:['Quelle','Quel','Combien'],ans:'a',cat:'grammar',
+         tip:{tr:'Heure dişil → Quelle heure',en:'Heure is feminine → Quelle heure'}},
+        {id:'q8',text:'Tu vas ___ Japon l\'été prochain ?',opts:['au','en','à'],ans:'a',cat:'grammar',
+         tip:{tr:'Eril ülke → au (Japon)',en:'Masculine country → au (Japon)'}},
+        {id:'q9',text:'Les enfants ___ (jouer) dans le jardin quand il a plu.',opts:['jouaient','ont joué','jouent'],ans:'a',cat:'grammar',
+         tip:{tr:'Yağmur düştüğünde süregelen eylem → imparfait',en:'Ongoing action when rain fell → imparfait'}},
+        {id:'q10',text:'« Il fait beau » signifie :',opts:['Il fait froid','Il y a du soleil','Il y a du vent'],ans:'b',cat:'vocab',
+         tip:{tr:'Il fait beau = güneş var, hava güzel',en:'Il fait beau = sunny, nice weather'}},
+      ]
+    },
+    { key:'s2', label:{tr:'Bölüm 2: Yapı & Boşluk Doldurma',en:'Section 2: Structure & Fill-in'}, pts:15, type:'mixed',
+      fills:[
+        {id:'q11',sentence:'ÊTRE → vous ___ (conjuguez)',blanks:[{id:'q11',ans:['êtes']}],cat:'grammar',tip:{tr:'ÊTRE: je suis / tu es / il est / nous sommes / vous êtes / ils sont',en:'ÊTRE: je suis / tu es / il est / nous sommes / vous êtes / ils sont'}},
+        {id:'q12',sentence:'AVOIR → ils ___ (conjuguez)',blanks:[{id:'q12',ans:['ont']}],cat:'grammar',tip:{tr:'AVOIR: j\'ai / tu as / il a / nous avons / vous avez / ils ont',en:'AVOIR: j\'ai / tu as / il a / nous avons / vous avez / ils ont'}},
+        {id:'q13',sentence:'Article partitif : Je mange ___ pain et je bois ___ café.',blanks:[{id:'q13',ans:['du']},{id:'q13b',ans:['du']}],cat:'grammar',tip:{tr:'Eril belirsiz miktar → du (de + le)',en:'Masculine partitive → du (de + le)'}},
+        {id:'q14',sentence:'ALLER au passé composé : nous ___ au marché.',blanks:[{id:'q14',ans:['sommes allés','sommes allées']}],cat:'grammar',tip:{tr:'ALLER être\'li → sommes allés/allées',en:'ALLER uses être → sommes allés/allées'}},
+        {id:'q15',sentence:'FAIRE au passé composé : elle ___ ses devoirs.',blanks:[{id:'q15',ans:['a fait']}],cat:'grammar',tip:{tr:'FAIRE avoir\'li → a fait',en:'FAIRE uses avoir → a fait'}},
+        {id:'q16',sentence:'À l\'imparfait : quand j\'étais jeune, je ___ (jouer) au foot.',blanks:[{id:'q16',ans:['jouais']}],cat:'grammar',tip:{tr:'Çocukken alışkanlık → imparfait: jouais',en:'Past habit → imparfait: jouais'}},
+        {id:'q17',sentence:'Négation ne...pas : je ___ parle ___ anglais.',blanks:[{id:'q17',ans:['ne','n\'']},{id:'q17b',ans:['pas']}],cat:'grammar',tip:{tr:'Olumsuz: ne + fiil + pas',en:'Negation: ne + verb + pas'}},
+        {id:'q18',sentence:'Futur proche : demain, il ___ (visiter) Paris.',blanks:[{id:'q18',ans:['va visiter']}],cat:'grammar',tip:{tr:'Futur proche = aller + infinitif',en:'Futur proche = aller + infinitive'}},
+        {id:'q19',sentence:'Pronom COD : il cherche Marie → il ___ cherche.',blanks:[{id:'q19',ans:['la','l\'']}],cat:'grammar',tip:{tr:'Marie = dişil COD → la (fiilden önce)',en:'Marie = feminine COD → la (before verb)'}},
+        {id:'q20',sentence:'Question avec est-ce que : ___ vous habitez à Lyon ?',blanks:[{id:'q20',ans:['est-ce que']}],cat:'grammar',tip:{tr:'Evet/hayır sorusu → Est-ce que',en:'Yes/no question → Est-ce que'}},
+      ],
+      mcqs:[
+        {id:'q21',text:'Le féminin de « beau » est :',opts:['beauté','belle','bel'],ans:'b',cat:'grammar',tip:{tr:'Beau → belle (dişil)',en:'Beau → belle (feminine)'}},
+        {id:'q22',text:'Le chien est ___ la table (= underneath)',opts:['sur','sous','entre'],ans:'b',cat:'grammar',tip:{tr:'Altında = sous',en:'Underneath = sous'}},
+        {id:'q23',text:'Ce livre est ___ cher que l\'autre. (cheaper)',opts:['plus','moins','aussi'],ans:'b',cat:'grammar',tip:{tr:'Daha ucuz = moins cher',en:'Cheaper = moins cher'}},
+        {id:'q24',text:'VOULOIR → vous ___',opts:['voulez','voulons','veulent'],ans:'a',cat:'grammar',tip:{tr:'VOULOIR: vous voulez',en:'VOULOIR: vous voulez'}},
+        {id:'q25',text:'Je vais ___ cinéma. (à + le = ?)',opts:['à le','au','du'],ans:'b',cat:'grammar',tip:{tr:'à + le = au (birleşim)',en:'à + le = au (contraction)'}},
+      ]
+    },
+    { key:'s3', label:{tr:'Bölüm 3: Okuma Anlama',en:'Section 3: Reading Comprehension'}, pts:5, type:'mcq',
+      passage:{tr:'',en:''},
+      text:'Sophie et Pierre sont arrivés à Paris le vendredi à 10 heures. Ils ont pris le métro pour aller à leur hôtel. Ils ont passé deux heures au Louvre. Le soir, ils ont mangé une crêpe au bord de la Seine. Ils ont adoré leur week-end.',
+      questions:[
+        {id:'q26',text:'Sophie et Pierre sont arrivés à :',opts:['9h00','10h00','11h00'],ans:'b',cat:'reading',tip:{tr:'Metin: vendredi à 10 heures',en:'Text: vendredi à 10 heures'}},
+        {id:'q27',text:'Comment ont-ils voyagé jusqu\'à l\'hôtel ?',opts:['En taxi','En bus','En métro'],ans:'c',cat:'reading',tip:{tr:'Metin: ils ont pris le métro',en:'Text: ils ont pris le métro'}},
+        {id:'q28',text:'Combien de temps ont-ils passé au Louvre ?',opts:['Une heure','Deux heures','Trois heures'],ans:'b',cat:'reading',tip:{tr:'Metin: deux heures au Louvre',en:'Text: deux heures au Louvre'}},
+        {id:'q29',text:'Qu\'ont-ils mangé le soir ?',opts:['Une pizza','Une crêpe','Un sandwich'],ans:'b',cat:'reading',tip:{tr:'Metin: ils ont mangé une crêpe',en:'Text: ils ont mangé une crêpe'}},
+        {id:'q30',text:'Vrai ou faux : ils ont adoré leur week-end.',opts:['Vrai','Faux','On ne sait pas'],ans:'a',cat:'reading',tip:{tr:'Metin: Ils ont adoré leur week-end.',en:'Text: Ils ont adoré leur week-end.'}},
+      ]
+    },
+    { key:'s4', label:{tr:'Bölüm 4: Dinleme/Diyalog Anlama',en:'Section 4: Dialogue Comprehension'}, pts:5, type:'mcq',
+      dialogue:'— Bonsoir, j\'ai une réservation au nom de Dupont.\n— Oui, pour deux personnes. Voici votre table.\n— Merci. Quel est le plat du jour ?\n— C\'est un bœuf bourguignon. Et pour boisson ?\n— Une carafe d\'eau, s\'il vous plaît.\n— Parfait. Je voudrais aussi voir la carte des desserts.',
+      questions:[
+        {id:'q31',text:'C\'est une conversation :',opts:['à la gare','au restaurant','à l\'hôtel'],ans:'b',cat:'reading',tip:{tr:'Rezervasyon, masa → restoran',en:'Reservation, table → restaurant'}},
+        {id:'q32',text:'La réservation est pour :',opts:['une personne','deux personnes','trois personnes'],ans:'b',cat:'reading',tip:{tr:'Metin: pour deux personnes',en:'Text: pour deux personnes'}},
+        {id:'q33',text:'Le plat du jour est :',opts:['un steak frites','un bœuf bourguignon','une soupe'],ans:'b',cat:'reading',tip:{tr:'Metin: un bœuf bourguignon',en:'Text: un bœuf bourguignon'}},
+        {id:'q34',text:'Ils commandent :',opts:['du vin','une carafe d\'eau','un jus d\'orange'],ans:'b',cat:'reading',tip:{tr:'Metin: une carafe d\'eau',en:'Text: une carafe d\'eau'}},
+        {id:'q35',text:'« Je voudrais » est :',opts:['le présent','le conditionnel','l\'imparfait'],ans:'b',cat:'grammar',tip:{tr:'Je voudrais = conditionnel (kibarca istek)',en:'Je voudrais = conditional (polite request)'}},
+      ]
+    }
+  ]
+};
+
+// EXAM 2 data extracted from the uploaded file
+const EXAM2 = {
+  id:2, title:'DELF A2 — Sınav 2', totalAuto:80,
+  sections:[
+    { key:'s1', label:{tr:'Bölüm A: QCM (60 soru)',en:'Part A: MCQ (60 questions)'}, pts:60, type:'mcq',
+      questions:[
+        {id:'m0',text:'Le contraire de « acheter » est :',opts:['vendre','payer','donner'],ans:'a',cat:'vocab',tip:{tr:'Satın almak ↔ satmak = vendre',en:'Buy ↔ sell = vendre'}},
+        {id:'m1',text:'On dit « Bonne nuit » quand :',opts:['on se réveille le matin','on part se coucher le soir','on mange à midi'],ans:'b',cat:'vocab',tip:{tr:'Bonne nuit = yatarken söylenir',en:'Bonne nuit = said when going to bed'}},
+        {id:'m2',text:'Un « médecin » travaille dans :',opts:['une école','un hôpital / cabinet médical','une banque'],ans:'b',cat:'vocab',tip:{tr:'Doktor → hastane / muayenehane',en:'Doctor → hospital / cabinet'}},
+        {id:'m3',text:'Pour voyager en avion, j\'ai besoin :',opts:['d\'un permis de conduire','d\'un passeport ou d\'une carte d\'identité','d\'une carte de crédit seulement'],ans:'b',cat:'vocab',tip:{tr:'Uçak için pasaport veya kimlik',en:'For plane: passport or ID card'}},
+        {id:'m4',text:'Le mot « rapide » est synonyme de :',opts:['lent','fort','vite / veloce'],ans:'c',cat:'vocab',tip:{tr:'Rapide = hızlı = vite',en:'Rapide = fast = vite'}},
+        {id:'m5',text:'Quel est le pluriel de « un œil » ?',opts:['des œils','des yeux','des oeilles'],ans:'b',cat:'vocab',tip:{tr:'œil → yeux (düzensiz çoğul)',en:'œil → yeux (irregular plural)'}},
+        {id:'m6',text:'On appelle « loyer » :',opts:['le prix d\'un billet de train','l\'argent qu\'on paie chaque mois pour son logement','le salaire mensuel'],ans:'b',cat:'vocab',tip:{tr:'Loyer = kira',en:'Loyer = rent'}},
+        {id:'m7',text:'« J\'ai soif » signifie que :',opts:['j\'ai envie de manger','j\'ai envie de boire','je suis fatigué(e)'],ans:'b',cat:'vocab',tip:{tr:'Soif = susuzluk',en:'Soif = thirst'}},
+        {id:'m8',text:'Un « foulard » est :',opts:['un chapeau','un accessoire porté autour du cou','une chaussure'],ans:'b',cat:'vocab',tip:{tr:'Foulard = atkı / eşarp',en:'Foulard = scarf worn around neck'}},
+        {id:'m9',text:'Le mot « gratuit » signifie :',opts:['très cher','qui ne coûte rien','qui est en promotion'],ans:'b',cat:'vocab',tip:{tr:'Gratuit = ücretsiz',en:'Gratuit = free (no cost)'}},
+        {id:'m10',text:'« Il est en retard » signifie qu\'il :',opts:['arrive avant l\'heure prévue','n\'arrive pas à l\'heure prévue','arrive exactement à l\'heure'],ans:'b',cat:'vocab',tip:{tr:'En retard = geç kalmış',en:'En retard = late'}},
+        {id:'m11',text:'On utilise « Félicitations ! » quand :',opts:['quelqu\'un est triste','quelqu\'un réussit quelque chose','quelqu\'un part en voyage'],ans:'b',cat:'vocab',tip:{tr:'Félicitations = Tebrikler!',en:'Félicitations = Congratulations!'}},
+        {id:'m12',text:'Le « sous-sol » d\'un immeuble est :',opts:['le dernier étage','l\'étage sous le niveau de la rue','le rez-de-chaussée'],ans:'b',cat:'vocab',tip:{tr:'Sous-sol = bodrum kat',en:'Sous-sol = basement'}},
+        {id:'m13',text:'Un « rendez-vous » chez le médecin, c\'est :',opts:['une visite sans prévenir','une heure fixée à l\'avance','une urgence médicale'],ans:'b',cat:'vocab',tip:{tr:'Rendez-vous = önceden alınan randevu',en:'Rendez-vous = scheduled appointment'}},
+        {id:'m14',text:'Le repas principal du soir s\'appelle :',opts:['le déjeuner','le goûter','le dîner'],ans:'c',cat:'vocab',tip:{tr:'Akşam yemeği = le dîner',en:'Evening meal = le dîner'}},
+        {id:'m15',text:'Pour traverser une rue, on utilise :',opts:['un passage piéton','un rond-point','un carrefour'],ans:'a',cat:'vocab',tip:{tr:'Yaya geçidi = passage piéton',en:'Crosswalk = passage piéton'}},
+        {id:'m16',text:'« C\'est gratuit » — quel est le contraire ?',opts:['C\'est cher','C\'est payant','C\'est rare'],ans:'b',cat:'vocab',tip:{tr:'Ücretsiz ↔ ücretli = payant',en:'Free ↔ paid = payant'}},
+        {id:'m17',text:'Un appartement « meublé » est :',opts:['un appartement vide','un appartement avec des meubles','un appartement en mauvais état'],ans:'b',cat:'vocab',tip:{tr:'Meublé = mobilyalı',en:'Meublé = furnished'}},
+        {id:'m18',text:'« Il fait froid » — quel vêtement mets-tu ?',opts:['Un maillot de bain','Un manteau','Un short'],ans:'b',cat:'vocab',tip:{tr:'Soğuk hava → manteau (palto)',en:'Cold weather → manteau (coat)'}},
+        {id:'m19',text:'Pour demander son chemin, on dit :',opts:['Excusez-moi, pouvez-vous m\'aider ?','Laissez-moi passer, s\'il vous plaît.','Ce n\'est pas mon problème.'],ans:'a',cat:'vocab',tip:{tr:'Yol sormak = Excusez-moi, pouvez-vous m\'aider?',en:'Asking directions = Excusez-moi, pouvez-vous m\'aider?'}},
+        {id:'m20',text:'Conjuguez PRENDRE : « Vous ___ le bus chaque matin. »',opts:['prenez','prennez','prends'],ans:'a',cat:'grammar',tip:{tr:'PRENDRE: vous prenez',en:'PRENDRE: vous prenez'}},
+        {id:'m21',text:'Passé composé de PARTIR : « Elle ___ à 8h. »',opts:['a parti','est parti','est partie'],ans:'c',cat:'grammar',tip:{tr:'PARTIR être\'li, elle → est partie (dişil)',en:'PARTIR uses être, elle → est partie (feminine)'}},
+        {id:'m22',text:'Imparfait de AVOIR : « Quand j\'étais enfant, j\'___ un chien. »',opts:['avais','avait','ai eu'],ans:'a',cat:'grammar',tip:{tr:'Imparfait j\'avais',en:'Imparfait: j\'avais'}},
+        {id:'m23',text:'Futur simple de ÊTRE : « Demain, il ___ médecin. »',opts:['sera','est','serait'],ans:'a',cat:'grammar',tip:{tr:'Futur simple ÊTRE: il sera',en:'Futur simple ÊTRE: il sera'}},
+        {id:'m24',text:'Conjuguez POUVOIR : « Est-ce que tu ___ m\'aider ? »',opts:['peut','peux','pouvez'],ans:'b',cat:'grammar',tip:{tr:'POUVOIR: tu peux',en:'POUVOIR: tu peux'}},
+        {id:'m25',text:'Passé composé de VENIR : « Ils ___ chez moi hier soir. »',opts:['ont venu','sont venus','venaient'],ans:'b',cat:'grammar',tip:{tr:'VENIR être\'li + eril çoğul → sont venus',en:'VENIR uses être + masc.pl. → sont venus'}},
+        {id:'m26',text:'Imparfait ou PC ? « Hier, je ___ (lire) un livre quand le téléphone a sonné. »',opts:['lisais','ai lu','lus'],ans:'a',cat:'grammar',tip:{tr:'Telefon çaldığında süregelen eylem → imparfait: lisais',en:'Ongoing action when phone rang → imparfait: lisais'}},
+        {id:'m27',text:'Conjuguez DEVOIR : « Vous ___ finir avant midi. »',opts:['doivent','devez','doit'],ans:'b',cat:'grammar',tip:{tr:'DEVOIR: vous devez',en:'DEVOIR: vous devez'}},
+        {id:'m28',text:'Futur proche : « Nous ___ partir dans cinq minutes. »',opts:['allons','irons','sommes allés'],ans:'a',cat:'grammar',tip:{tr:'Futur proche: allons + partir',en:'Futur proche: allons + partir'}},
+        {id:'m29',text:'Passé composé de NAÎTRE : « Il ___ en 1990. »',opts:['a né','est né','a naquit'],ans:'b',cat:'grammar',tip:{tr:'NAÎTRE être\'li → est né',en:'NAÎTRE uses être → est né'}},
+        {id:'m30',text:'Conjuguez SAVOIR : « Elle ___ parler trois langues. »',opts:['sais','sait','savent'],ans:'b',cat:'grammar',tip:{tr:'SAVOIR: elle sait',en:'SAVOIR: elle sait'}},
+        {id:'m31',text:'Conditionnel de VOULOIR : « Je ___ un café, s\'il vous plaît. »',opts:['veux','voulais','voudrais'],ans:'c',cat:'grammar',tip:{tr:'Kibarca istemek → conditionnel: voudrais',en:'Polite request → conditional: voudrais'}},
+        {id:'m32',text:'Passé composé de S\'ASSEOIR : « Nous nous ___ dans le parc. »',opts:['avons assis','sommes assis','sommes assis(es)'],ans:'c',cat:'grammar',tip:{tr:'Pronominal fiil être\'li → sommes assis(es)',en:'Pronominal verb uses être → sommes assis(es)'}},
+        {id:'m33',text:'Impératif de ÉCOUTER (tu) :',opts:['Écoute !','Écoutes !','Tu écoutes !'],ans:'a',cat:'grammar',tip:{tr:'İmperatif tu: écoute (s düşer)',en:'Imperative tu: écoute (no -s)'}},
+        {id:'m34',text:'Gérondif de TRAVAILLER : « Elle écoute de la musique ___ »',opts:['en travaillant','en travaille','travaillant'],ans:'a',cat:'grammar',tip:{tr:'Gérondif = en + -ant',en:'Gérondif = en + -ant'}},
+        {id:'m35',text:'Article : « ___ eau est essentielle pour vivre. »',opts:['Le','La','L\''],ans:'c',cat:'grammar',tip:{tr:'Eau sesli harfle başlar → L\'',en:'Eau starts with vowel → L\''}},
+        {id:'m36',text:'Article partitif : « Tu veux ___ sucre dans ton café ? »',opts:['de la','du','des'],ans:'b',cat:'grammar',tip:{tr:'Sucre eril → du sucre',en:'Sucre is masculine → du sucre'}},
+        {id:'m37',text:'Négation : « Il y a ___ pain. » (aucun pain)',opts:['pas du','plus de','du'],ans:'b',cat:'grammar',tip:{tr:'Olumsuz → plus de (artık yok)',en:'Negation → plus de (no more)'}},
+        {id:'m38',text:'Pronom COI : « Je téléphone ___ mes parents tous les jours. »',opts:['les','leur','lui'],ans:'b',cat:'grammar',tip:{tr:'Çoğul dolaylı nesne → leur',en:'Plural indirect object → leur'}},
+        {id:'m39',text:'Pronom Y : « Tu vas à la banque ? — Oui, j\'___ vais maintenant. »',opts:['en','y','là'],ans:'b',cat:'grammar',tip:{tr:'À + yer → y ile değiştirilir',en:'À + place → replaced by y'}},
+        {id:'m40',text:'Pronom EN : « Tu as des frères ? — Oui, j\'___ ai deux. »',opts:['y','en','les'],ans:'b',cat:'grammar',tip:{tr:'De + isim → en ile değiştirilir',en:'De + noun → replaced by en'}},
+        {id:'m41',text:'Pronom relatif QUI : « C\'est la dame ___ habite à côté. »',opts:['que','qui','dont'],ans:'b',cat:'grammar',tip:{tr:'Özne işlevi → qui',en:'Subject function → qui'}},
+        {id:'m42',text:'Pronom relatif QUE : « C\'est le livre ___ j\'ai lu. »',opts:['qui','que','où'],ans:'b',cat:'grammar',tip:{tr:'Nesne işlevi → que',en:'Object function → que'}},
+        {id:'m43',text:'Superlatif : « C\'est ___ grand musée de la ville. »',opts:['le plus','plus','très'],ans:'a',cat:'grammar',tip:{tr:'Üstünlük derecesi → le plus',en:'Superlative → le plus'}},
+        {id:'m44',text:'Comparatif : « Mon frère est ___ grand ___ moi. »',opts:['aussi / que','si / que','autant / que'],ans:'a',cat:'grammar',tip:{tr:'Eşitlik derecesi → aussi... que',en:'Equality comparison → aussi... que'}},
+        {id:'m45',text:'Préposition : « Je viens ___ Maroc. »',opts:['de','du','des'],ans:'b',cat:'grammar',tip:{tr:'Eril ülkeden gelme → du Maroc',en:'From masculine country → du Maroc'}},
+        {id:'m46',text:'Préposition : « Il habite ___ Paris. »',opts:['au','en','à'],ans:'c',cat:'grammar',tip:{tr:'Şehirde yaşamak → à Paris',en:'Living in a city → à Paris'}},
+        {id:'m47',text:'Accord adjectif : « Ces filles sont très ___ (beau). »',opts:['beau','belle','belles'],ans:'c',cat:'grammar',tip:{tr:'Dişil çoğul → belles',en:'Feminine plural → belles'}},
+        {id:'m48',text:'Accord PP : « Les lettres qu\'il a ___ (écrire) sont longues. »',opts:['écrit','écrites','écrits'],ans:'b',cat:'grammar',tip:{tr:'COD önce gelmiş, dişil çoğul → écrites',en:'COD precedes, feminine plural → écrites'}},
+        {id:'m49',text:'Question indirecte : « Je ne sais pas ___ il arrive. »',opts:['quand est-ce que','quand','quand qu\''],ans:'b',cat:'grammar',tip:{tr:'Dolaylı soruda est-ce que düşer → quand',en:'Indirect question: est-ce que drops → quand'}},
+        {id:'m50',text:'Au téléphone : « Allô, qui est ___ l\'appareil ? »',opts:['sur','à','en'],ans:'b',cat:'vocab',tip:{tr:'Telefonda: qui est à l\'appareil',en:'On phone: qui est à l\'appareil'}},
+        {id:'m51',text:'Dans une lettre formelle, on commence par :',opts:['Salut !','Monsieur / Madame,','Coucou,'],ans:'b',cat:'vocab',tip:{tr:'Resmi mektup → Monsieur / Madame',en:'Formal letter → Monsieur / Madame'}},
+        {id:'m52',text:'Pour donner son adresse :',opts:['J\'habite rue Victor Hugo, au numéro 12.','Je suis dans la rue.','Mon adresse est bonne.'],ans:'a',cat:'vocab',tip:{tr:'Adres söyleme: J\'habite rue...',en:'Giving address: J\'habite rue...'}},
+        {id:'m53',text:'Pour s\'excuser :',opts:['Ce n\'est pas ma faute.','Je vous en prie.','Je suis vraiment désolé(e).'],ans:'c',cat:'vocab',tip:{tr:'Özür dilemek → Je suis désolé(e)',en:'Apologizing → Je suis désolé(e)'}},
+        {id:'m54',text:'À la pharmacie, on demande :',opts:['un kilo de tomates','quelque chose contre le rhume','une baguette'],ans:'b',cat:'vocab',tip:{tr:'Eczanede → soğuk algınlığı için bir şey',en:'Pharmacy → something for a cold'}},
+        {id:'m55',text:'Pour accepter une invitation :',opts:['C\'est impossible pour moi.','Avec plaisir !','Je ne suis pas libre.'],ans:'b',cat:'vocab',tip:{tr:'Daveti kabul etmek → Avec plaisir!',en:'Accepting invitation → Avec plaisir!'}},
+        {id:'m56',text:'Pour décrire une personne grande et mince :',opts:['Il est petit et gros.','Il est grand et mince.','Il est moyen et fort.'],ans:'b',cat:'vocab',tip:{tr:'Grand = uzun boylu, mince = ince',en:'Grand = tall, mince = slim'}},
+        {id:'m57',text:'« La Toussaint » est :',opts:['une fête nationale française','un plat français traditionnel','un style de musique française'],ans:'a',cat:'vocab',tip:{tr:'La Toussaint = 1 Kasım Azizler Bayramı',en:'La Toussaint = All Saints\' Day (Nov. 1)'}},
+        {id:'m58',text:'Pour indiquer la direction :',opts:['Allez tout droit, puis tournez à gauche.','C\'est loin d\'ici, bonne chance !','Prenez le taxi.'],ans:'a',cat:'vocab',tip:{tr:'Yön tarifi → tout droit + tournez à gauche',en:'Giving directions → tout droit + tournez à gauche'}},
+        {id:'m59',text:'Quelle phrase est correcte au passé composé ?',opts:['Hier, je suis mangé une pizza.','Hier, j\'ai mangé une pizza.','Hier, j\'ai manger une pizza.'],ans:'b',cat:'grammar',tip:{tr:'MANGER avoir\'li → j\'ai mangé (infinitif değil)',en:'MANGER uses avoir → j\'ai mangé (not infinitive)'}},
+      ]
+    },
+    { key:'s2', label:{tr:'Bölüm B: Boşluk Doldurma',en:'Part B: Fill-in-Blank'}, pts:20, type:'fill',
+      fills:[
+        {id:'f1',sentence:'Nous ___ (aller) au marché samedi dernier.',blanks:[{id:'f1',ans:['sommes allés','sommes allées']}],cat:'grammar',tip:{tr:'ALLER être\'li, nous → sommes allés/allées',en:'ALLER être, nous → sommes allés/allées'}},
+        {id:'f2',sentence:'Quand elle était petite, elle ___ (vouloir) être danseuse.',blanks:[{id:'f2',ans:['voulait']}],cat:'grammar',tip:{tr:'Geçmişteki arzu → imparfait: voulait',en:'Past desire → imparfait: voulait'}},
+        {id:'f3',sentence:'Il ___ (ne pas pouvoir) venir hier soir.',blanks:[{id:'f3',ans:['n\'a pas pu','ne pouvait pas']}],cat:'grammar',tip:{tr:'Olumsuz geçmiş → n\'a pas pu veya ne pouvait pas',en:'Negative past → n\'a pas pu or ne pouvait pas'}},
+        {id:'f4',sentence:'Ce soir, je ___ (regarder) un film avec mes amis.',blanks:[{id:'f4',ans:['vais regarder']}],cat:'grammar',tip:{tr:'Yakın gelecek → vais regarder',en:'Near future → vais regarder'}},
+        {id:'f5',sentence:'Les enfants ___ (jouer) dans le jardin quand il a commencé à pleuvoir.',blanks:[{id:'f5',ans:['jouaient']}],cat:'grammar',tip:{tr:'Yağmur başladığında süregelen eylem → imparfait',en:'Ongoing when rain started → imparfait'}},
+        {id:'f6',sentence:'Tu ___ (devoir) appeler le médecin si tu es malade.',blanks:[{id:'f6',ans:['dois','devrais']}],cat:'grammar',tip:{tr:'DEVOIR présent: dois; conditionnel: devrais',en:'DEVOIR présent: dois; conditional: devrais'}},
+        {id:'f7',sentence:'Elle a acheté une voiture. Elle ___ a achetée il y a deux semaines.',blanks:[{id:'f7',ans:["l'","l'"]}],cat:'grammar',tip:{tr:'Dişil COD → l\' (fiilden önce)',en:'Feminine COD → l\' (before verb)'}},
+        {id:'f8',sentence:'Ils ___ (s\'appeler) Marc et Julie.',blanks:[{id:'f8',ans:["s'appellent"]}],cat:'grammar',tip:{tr:'Pronominal fiil ils → s\'appellent',en:'Pronominal verb ils → s\'appellent'}},
+        {id:'f9',sentence:'C\'est la ville ___ j\'ai visité l\'année dernière.',blanks:[{id:'f9',ans:['que',"qu'"]}],cat:'grammar',tip:{tr:'COD işlevi (şehir nesne) → que',en:'Object function (city is object) → que'}},
+        {id:'f10',sentence:'Je voudrais ___ eau minérale, s\'il vous plaît.',blanks:[{id:'f10',ans:["de l'","une"]}],cat:'grammar',tip:{tr:'Mineral su → de l\'eau (partitif) veya une eau',en:'Mineral water → de l\'eau (partitive) or une eau'}},
+      ]
+    },
+    { key:'s3', label:{tr:'Bölüm C: Okuma (Sophie\'nin E-postası)',en:'Part C: Reading (Sophie\'s Email)'}, pts:10, type:'mcq',
+      passage:`De : sophie.bernard@mail.fr | Objet : Nouvelles de Barcelone !
+
+Bonjour tout le monde ! Je vous écris depuis Barcelone où je suis arrivée il y a trois jours. J'ai pris l'avion de Paris et le vol a duré deux heures. L'hôtel est magnifique — il est situé près de la mer et ma chambre a une grande terrasse avec vue sur la plage.
+
+Hier, j'ai visité le quartier gothique avec mon amie Laura. Nous avons marché pendant trois heures et nous avons découvert de belles églises et des petits cafés sympathiques. Le soir, nous avons mangé des tapas dans un restaurant du centre-ville. C'était délicieux !
+
+Aujourd'hui il fait très beau — il y a du soleil et il fait 28 degrés. Je vais passer l'après-midi à la plage. Demain, je vais visiter le musée Picasso et faire du shopping. Je rentre dimanche prochain. À bientôt ! Bisous, Sophie`,
+      questions:[
+        {id:'r0',text:'D\'où Sophie écrit-elle cet e-mail ?',opts:['De Paris','De Barcelone','De Madrid'],ans:'b',cat:'reading',tip:{tr:'Metin: depuis Barcelone',en:'Text: depuis Barcelone'}},
+        {id:'r1',text:'Comment Sophie est-elle arrivée à Barcelone ?',opts:['En train','En voiture','En avion'],ans:'c',cat:'reading',tip:{tr:'Metin: j\'ai pris l\'avion',en:'Text: j\'ai pris l\'avion'}},
+        {id:'r2',text:'Combien de temps dure le voyage ?',opts:['Une heure','Deux heures','Trois heures'],ans:'b',cat:'reading',tip:{tr:'Metin: le vol a duré deux heures',en:'Text: le vol a duré deux heures'}},
+        {id:'r3',text:'Où est situé l\'hôtel de Sophie ?',opts:['Dans le centre-ville','Près de la mer','À côté de la gare'],ans:'b',cat:'reading',tip:{tr:'Metin: situé près de la mer',en:'Text: situé près de la mer'}},
+        {id:'r4',text:'Avec qui Sophie a-t-elle visité le quartier gothique ?',opts:['Avec sa famille','Seule','Avec son amie Laura'],ans:'c',cat:'reading',tip:{tr:'Metin: avec mon amie Laura',en:'Text: avec mon amie Laura'}},
+        {id:'r5',text:'Combien de temps ont-elles marché dans le quartier gothique ?',opts:['Une heure','Deux heures','Trois heures'],ans:'c',cat:'reading',tip:{tr:'Metin: pendant trois heures',en:'Text: pendant trois heures'}},
+        {id:'r6',text:'Qu\'ont-elles mangé le soir ?',opts:['Des pâtes','Des tapas','De la paella'],ans:'b',cat:'reading',tip:{tr:'Metin: nous avons mangé des tapas',en:'Text: nous avons mangé des tapas'}},
+        {id:'r7',text:'Quelle est la météo le jour de l\'e-mail ?',opts:['Il pleut','Il fait froid','Il fait beau et chaud'],ans:'c',cat:'reading',tip:{tr:'Metin: il fait très beau, 28 degrés',en:'Text: il fait très beau, 28 degrees'}},
+        {id:'r8',text:'Que va faire Sophie le lendemain ?',opts:['Rentrer à Paris','Visiter le musée Picasso et faire du shopping','Aller à la plage encore'],ans:'b',cat:'reading',tip:{tr:'Metin: visiter le musée Picasso et faire du shopping',en:'Text: visiter le musée Picasso et faire du shopping'}},
+        {id:'r9',text:'Quand rentre Sophie à Paris ?',opts:['Le lendemain','Dimanche prochain','Dans une semaine'],ans:'b',cat:'reading',tip:{tr:'Metin: je rentre dimanche prochain',en:'Text: je rentre dimanche prochain'}},
+      ]
+    }
+  ]
+};
+
+// ═══════════════ EXAM ENGINE ═══════════════
+function startExam(examId) {
+  currentExam = examId === 1 ? EXAM1 : EXAM2;
+  examScores = {};
+  examDone = {};
+  liveScore = 0;
+  examTimeLeft = 3600;
+  currentExam.sections.forEach(s => { examScores[s.key]=0; examDone[s.key]=false; });
+
+  document.querySelectorAll('.app-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('exam-area').style.display='block';
+  document.getElementById('exam-title-bar').textContent = currentExam.title;
+
+  buildExamBody();
+  startExamTimer();
+  window.scrollTo(0,0);
+}
+
+function buildExamBody() {
+  const body = document.getElementById('exam-body');
+  body.innerHTML='';
+  currentExam.sections.forEach(sec => {
+    const hdr = document.createElement('div');
+    hdr.className='part-hdr';
+    hdr.innerHTML=`<div class="part-circle">${sec.key.replace('s','').toUpperCase()}</div>
+      <div class="part-hdr-info"><h3>${sec.label[currentLang]||sec.label.tr}</h3><p>${sec.pts} pts</p></div>
+      <div class="part-pts">${sec.pts} pts</div>`;
+    body.appendChild(hdr);
+
+    // Passage / dialogue
+    if(sec.passage || sec.text || sec.dialogue) {
+      const pass = document.createElement('div');
+      pass.className='read-passage';
+      if(sec.text) pass.innerHTML=`<h4>📖 Texte</h4><p>${sec.text}</p>`;
+      else if(sec.dialogue) pass.innerHTML=`<h4>💬 Dialogue</h4><pre style="white-space:pre-wrap;font-family:inherit;font-size:.9rem;line-height:1.8">${sec.dialogue}</pre>`;
+      else if(sec.passage) pass.innerHTML=`<h4>📧 Un e-mail de vacances</h4><p style="white-space:pre-wrap;font-size:.9rem;line-height:1.9">${sec.passage}</p>`;
+      body.appendChild(pass);
+    }
+
+    // Questions
+    const qArr = sec.questions || [];
+    const fArr = sec.fills || [];
+    const mArr = sec.mcqs || [];
+
+    qArr.forEach((q,i) => body.appendChild(buildMCQCard(q,i,sec.key)));
+    fArr.forEach((f,i) => body.appendChild(buildFillCard(f,i,sec.key)));
+    mArr.forEach((q,i) => body.appendChild(buildMCQCard(q,i,sec.key)));
+
+    // Writing
+    if(sec.key==='s4'||(!qArr.length&&!fArr.length&&!mArr.length)) {} // skip
+
+    // Check button
+    if(!examDone[sec.key]) {
+      const btn = document.createElement('div');
+      btn.className='section-check-row';
+      btn.innerHTML=`<button class="btn-check" onclick="checkSection('${sec.key}')">
+        <span data-tr>✓ ${sec.label.tr} Kontrol Et</span>
+        <span data-en>✓ Check ${sec.label.en}</span>
+      </button>`;
+      applyLang(btn);
+      body.appendChild(btn);
+    }
+  });
+
+  // Writing section for exam 2
+  if(currentExam.id===2) {
+    const whdr = document.createElement('div');
+    whdr.className='part-hdr';
+    whdr.innerHTML=`<div class="part-circle">D</div>
+      <div class="part-hdr-info"><h3><span>Expression écrite</span></h3><p>Auto-évaluation</p></div>
+      <div class="part-pts">Auto</div>`;
+    body.appendChild(whdr);
+    const writes=[
+      {q:'Décrivez votre journée d\'hier au passé composé. (3-4 phrases)',h:'Utilisez : je me suis levé(e), j\'ai mangé, je suis allé(e), j\'ai fait...'},
+      {q:'Parlez de votre ville : qu\'est-ce qu\'il y a ? (3-4 phrases)',h:'Il y a... On peut... C\'est une ville...'},
+      {q:'Imaginez vos vacances idéales. (Utilisez le conditionnel)',h:'J\'irais à... Je voudrais... Nous pourrions...'},
+    ];
+    writes.forEach((w,i)=>{
+      const card=document.createElement('div');
+      card.className='q-card';
+      card.innerHTML=`<div class="q-num-lbl"><span>${i+1}</span>Expression</div>
+        <div class="q-text">${w.q}</div>
+        <textarea class="write-area" placeholder="Écrivez ici..."></textarea>
+        <div class="write-hint-box">💡 ${w.h}</div>`;
+      body.appendChild(card);
+    });
+  }
+
+  const submitRow=document.createElement('div');
+  submitRow.className='submit-row';
+  submitRow.innerHTML=`<button class="btn-submit-exam" onclick="submitExam()">
+    🎓 <span data-tr>Sınavı Bitir ve Sonuçları Gör</span><span data-en>Finish Exam & See Results</span>
+  </button>`;
+  applyLang(submitRow);
+  body.appendChild(submitRow);
+
+  // Results panel
+  const res=document.createElement('div');
+  res.className='results-panel';
+  res.id='exam-results';
+  res.style.display='none';
+  body.appendChild(res);
+}
+
+function buildMCQCard(q,i,secKey) {
+  const div=document.createElement('div');
+  div.className='q-card';
+  div.id='qcard-'+q.id;
+  const catLabel = q.cat==='vocab'?(currentLang==='tr'?'Kelime':'Vocabulary'):(q.cat==='reading'?(currentLang==='tr'?'Okuma':'Reading'):(currentLang==='tr'?'Dilbilgisi':'Grammar'));
+  div.innerHTML=`<div class="q-num-lbl"><span>${i+1}</span>${catLabel}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="opts" id="opts-${q.id}">
+      ${q.opts.map((o,j)=>`<label class="opt"><input type="radio" name="${q.id}" value="${String.fromCharCode(97+j)}"> ${String.fromCharCode(97+j)}) ${o}</label>`).join('')}
+    </div>
+    <div class="q-fb" id="fb-${q.id}"></div>`;
+  div.querySelector('.opts').addEventListener('change', updateExamProgress);
+  return div;
+}
+
+function buildFillCard(f,i,secKey) {
+  const div=document.createElement('div');
+  div.className='q-card';
+  let sentence=f.sentence;
+  f.blanks.forEach(b=>{
+    sentence=sentence.replace('___',`<input class="blank" id="blank-${b.id}" placeholder="...">`);
+  });
+  div.innerHTML=`<div class="q-num-lbl"><span>${i+1}</span><span data-tr>Boşluk</span><span data-en>Fill</span></div>
+    <div style="font-size:.95rem;line-height:2.3">${sentence}</div>
+    <div class="fill-hint">💡 ${(f.tip&&f.tip[currentLang])||''}</div>
+    <div class="q-fb" id="fb-fill-${f.id}"></div>`;
+  applyLang(div);
+  div.querySelectorAll('input.blank').forEach(inp=>inp.addEventListener('input',updateExamProgress));
+  return div;
+}
+
+function applyLang(el) {
+  el.querySelectorAll('[data-tr]').forEach(e=>e.style.display=currentLang==='tr'?'inline':'none');
+  el.querySelectorAll('[data-en]').forEach(e=>e.style.display=currentLang==='en'?'inline':'none');
+}
+
+function updateExamProgress() {
+  let done=0,total=0;
+  currentExam.sections.forEach(sec=>{
+    const qs=sec.questions||[];
+    const fs=sec.fills||[];
+    const ms=sec.mcqs||[];
+    total+=qs.length+fs.length+ms.length;
+    qs.forEach(q=>{if(document.querySelector(`input[name="${q.id}"]:checked`))done++;});
+    fs.forEach(f=>{f.blanks.forEach(b=>{if(document.getElementById('blank-'+b.id)?.value.trim())done++;});});
+    ms.forEach(q=>{if(document.querySelector(`input[name="${q.id}"]:checked`))done++;});
+  });
+  document.getElementById('exam-progress-fill').style.width=`${total?Math.round(done/total*100):0}%`;
+}
+
+function checkSection(secKey) {
+  if(examDone[secKey]) return;
+  examDone[secKey]=true;
+  const sec=currentExam.sections.find(s=>s.key===secKey);
+  let s=0;
+  const qs=sec.questions||[];
+  const fs=sec.fills||[];
+  const ms=sec.mcqs||[];
+
+  qs.forEach(q=>{const r=checkMCQq(q);if(r&&r.correct){s++;}else if(r&&!r.correct){logMistake(q,r.selected,sec.key);}});
+  ms.forEach(q=>{const r=checkMCQq(q);if(r&&r.correct){s++;}else if(r&&!r.correct){logMistake(q,r.selected,sec.key);}});
+  fs.forEach(f=>{const r=checkFillF(f);s+=r.pts;if(r.wrong)logMistakeFill(f,r.got,sec.key);});
+
+  examScores[secKey]=s;
+  liveScore=Object.values(examScores).reduce((a,b)=>a+b,0);
+  document.getElementById('live-score-pill').textContent=liveScore+' pts';
+}
+
+function checkMCQq(q) {
+  const sel=document.querySelector(`input[name="${q.id}"]:checked`);
+  const opts=document.querySelectorAll(`input[name="${q.id}"]`);
+  const fb=document.getElementById('fb-'+q.id);
+  if(!opts.length)return null;
+  opts.forEach(o=>o.disabled=true);
+  if(!sel){if(fb){fb.textContent=(currentLang==='tr'?'⚠️ Cevap verilmedi.':'⚠️ Not answered.');fb.className='q-fb show no';}return{correct:false,selected:null};}
+  const correct=sel.value===q.ans;
+  sel.parentElement.classList.add(correct?'correct':'wrong');
+  if(!correct) opts.forEach(o=>{if(o.value===q.ans)o.parentElement.classList.add('correct');});
+  const tipText=q.tip?q.tip[currentLang]||q.tip.tr:'';
+  if(fb){
+    fb.textContent=correct?('✅ '+(currentLang==='tr'?'Doğru! ':'Correct! ')+tipText):('❌ '+(currentLang==='tr'?'Yanlış. Doğru cevap işaretlendi. ':'Wrong. Correct answer marked. ')+tipText);
+    fb.className='q-fb show '+(correct?'ok':'no');
+  }
+  return{correct,selected:sel.value};
+}
+
+function checkFillF(f) {
+  let allOk=true; let pts=0; const got=[];
+  f.blanks.forEach(b=>{
+    const el=document.getElementById('blank-'+b.id);
+    if(!el)return;
+    const val=el.value.trim().toLowerCase().replace(/['']/g,"'");
+    const ok=b.ans.map(a=>a.toLowerCase()).includes(val);
+    el.classList.add(ok?'correct':'wrong');
+    el.disabled=true;
+    got.push({id:b.id,val,ok});
+    if(!ok)allOk=false;
+  });
+  const fb=document.getElementById('fb-fill-'+f.id);
+  const tipText=f.tip?f.tip[currentLang]||f.tip.tr:'';
+  if(allOk){pts=currentExam.id===2?2:1;}
+  if(fb){
+    fb.textContent=allOk?('✅ '+(currentLang==='tr'?'Doğru! ':'Correct! ')+tipText):('❌ '+(currentLang==='tr'?'Doğru cevap: ':'Correct answer: ')+f.blanks.map(b=>b.ans[0]).join(' / ')+'. '+tipText);
+    fb.className='q-fb show '+(allOk?'ok':'no');
+  }
+  return{pts,wrong:!allOk,got};
+}
+
+async function logMistake(q, selected, secKey) {
+  if(!currentUser) return;
+  const selLabel = selected ? q.opts[['a','b','c','d'].indexOf(selected)] : '(no answer)';
+  const corrLabel = q.opts[['a','b','c','d'].indexOf(q.ans)];
+  // Update local cache
+  const existing = localMistakes.find(m=>m.question_id===q.id);
+  if(existing){ existing.count++; existing.your_answer=selLabel; }
+  else localMistakes.push({question_id:q.id,question_text:q.text,your_answer:selLabel,correct_answer:corrLabel,category:q.cat,exam_id:currentExam.id,tip_tr:q.tip?.tr||'',tip_en:q.tip?.en||'',count:1});
+  // Upsert to Supabase
+  await sb.from('mistakes').upsert({
+    user_id: currentUser.id,
+    question_id: q.id,
+    question_text: q.text,
+    your_answer: selLabel,
+    correct_answer: corrLabel,
+    category: q.cat,
+    exam_id: currentExam.id,
+    tip_tr: q.tip?.tr||'',
+    tip_en: q.tip?.en||'',
+    count: (existing?.count||0)+1,
+    last_seen_at: new Date().toISOString()
+  }, { onConflict: 'user_id,question_id' });
+}
+
+async function logMistakeFill(f, got, secKey) {
+  if(!currentUser) return;
+  const yourVal = got.map(g=>g.val).join(' / ');
+  const corrVal = f.blanks.map(b=>b.ans[0]).join(' / ');
+  const qid = 'fill-'+f.id;
+  const existing = localMistakes.find(m=>m.question_id===qid);
+  if(existing){ existing.count++; existing.your_answer=yourVal; }
+  else localMistakes.push({question_id:qid,question_text:f.sentence,your_answer:yourVal,correct_answer:corrVal,category:'fill',exam_id:currentExam.id,tip_tr:f.tip?.tr||'',tip_en:f.tip?.en||'',count:1});
+  await sb.from('mistakes').upsert({
+    user_id: currentUser.id,
+    question_id: qid,
+    question_text: f.sentence,
+    your_answer: yourVal,
+    correct_answer: corrVal,
+    category: 'fill',
+    exam_id: currentExam.id,
+    tip_tr: f.tip?.tr||'',
+    tip_en: f.tip?.en||'',
+    count: (existing?.count||0)+1,
+    last_seen_at: new Date().toISOString()
+  }, { onConflict: 'user_id,question_id' });
+}
+
+async function submitExam() {
+  clearInterval(examTimer);
+  currentExam.sections.forEach(s=>{if(!examDone[s.key])checkSection(s.key);});
+  liveScore=Object.values(examScores).reduce((a,b)=>a+b,0);
+  const maxAuto=currentExam.totalAuto;
+  const pct=Math.round(liveScore/maxAuto*100);
+
+  // Save score to Supabase
+  if(currentUser) {
+    const entry = {
+      user_id: currentUser.id,
+      exam_id: currentExam.id,
+      exam_title: currentExam.title,
+      total_score: liveScore,
+      max_score: maxAuto,
+      percentage: pct,
+      section_scores: examScores,
+      taken_at: new Date().toISOString()
+    };
+    const { data } = await sb.from('scores').insert(entry).select().single();
+    if(data) localScores.unshift(data);
+  }
+
+  // Build results
+  let grade='',msg='';
+  if(pct>=90){grade=currentLang==='tr'?'Mükemmel! 🏆':'Excellent! 🏆';msg=currentLang==='tr'?'Tebrikler! A2 seviyeniz çok sağlam. Sınava hazırsınız!':'Congratulations! Your A2 level is very solid. You are ready for the exam!';}
+  else if(pct>=75){grade=currentLang==='tr'?'Çok İyi! 🌟':'Very Good! 🌟';msg=currentLang==='tr'?'Harika sonuç! Birkaç dilbilgisi noktasını gözden geçirin, mükemmel olacaksınız.':'Great result! Review a few grammar points and you will be excellent.';}
+  else if(pct>=60){grade=currentLang==='tr'?'İyi 👍':'Good 👍';msg=currentLang==='tr'?'İyi çalışma! Fiil zamanları ve artikeller üzerinde odaklanın.':'Good work! Focus on verb tenses and articles.';}
+  else if(pct>=40){grade=currentLang==='tr'?'Geçer ✏️':'Passable ✏️';msg=currentLang==='tr'?'Eksikler var. Passé composé, imparfait ve artikelleri tekrar edin.':'Gaps remain. Review passé composé, imparfait and articles.';}
+  else{grade=currentLang==='tr'?'Geliştirilebilir 📚':'Needs Work 📚';msg=currentLang==='tr'?'Cesaretini kaybetme! Le Nouveau Taxi\'yi baştan alın ve düzenli çalışın.':'Don\'t give up! Start Le Nouveau Taxi from the beginning and study regularly.';}
+
+  const sectionRows=currentExam.sections.map(s=>`<div class="res-row"><span>${s.label[currentLang]||s.label.tr}</span><span>${examScores[s.key]||0} / ${s.pts}</span></div>`).join('');
+
+  const panel=document.getElementById('exam-results');
+  panel.innerHTML=`
+    <h2>${currentLang==='tr'?'Sonuçlar':'Results'}</h2>
+    <p class="results-sub">${currentExam.title}</p>
+    <div class="big-score">${liveScore}</div>
+    <div class="big-score-of">/ ${maxAuto} pts</div>
+    <div class="verdict-label">${pct}% — ${grade}</div>
+    <div class="verdict-msg">${msg}</div>
+    <div class="results-breakdown">${sectionRows}
+      <div class="res-row"><span>🏆 ${currentLang==='tr'?'Toplam':'Total'}</span><span>${liveScore} / ${maxAuto} (${pct}%)</span></div>
+    </div>
+    <button class="btn-retry" onclick="startExam(${currentExam.id})">${currentLang==='tr'?'↺ Tekrar Gir':'↺ Retry'}</button>
+    <button class="btn-dash" onclick="exitExam();switchTab('dashboard')">${currentLang==='tr'?'← Panele Dön':'← Back to Dashboard'}</button>
+  `;
+  panel.style.display='block';
+  panel.scrollIntoView({behavior:'smooth'});
+  renderDashboard();
+}
+
+function exitExam() {
+  clearInterval(examTimer);
+  examTimer=null;
+  document.getElementById('exam-area').style.display='none';
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-dashboard').classList.add('active');
+  document.querySelectorAll('.app-tab').forEach((t,i)=>{t.classList.toggle('active',i===0);});
+}
+
+function startExamTimer() {
+  const el=document.getElementById('exam-timer');
+  examTimer=setInterval(()=>{
+    examTimeLeft--;
+    const m=String(Math.floor(examTimeLeft/60)).padStart(2,'0');
+    const s=String(examTimeLeft%60).padStart(2,'0');
+    el.textContent=`${m}:${s}`;
+    if(examTimeLeft<=300)el.classList.add('warn');
+    if(examTimeLeft<=0){clearInterval(examTimer);submitExam();}
+  },1000);
+}
+
+// ═══════════════ MISTAKES ═══════════════
+let mistakeFilter='all';
+function filterMistakes(f) {
+  mistakeFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderMistakes();
+}
+function renderMistakes() {
+  if(!currentUser) return;
+  const all = localMistakes;
+  const filtered = mistakeFilter==='all' ? all : all.filter(m=>m.category===mistakeFilter);
+  const list = document.getElementById('mistakes-list');
+  if(!filtered.length){
+    list.innerHTML=`<div class="empty-state"><div class="empty-state-icon">🎉</div><p>${currentLang==='tr'?'Henüz kayıtlı hata yok. Bir sınava girin ve hataları burada görün!':'No mistakes logged yet. Take an exam and see your mistakes here!'}</p></div>`;
+    return;
+  }
+  const sorted=[...filtered].sort((a,b)=>(b.count||1)-(a.count||1));
+  list.innerHTML=sorted.map(m=>{
+    const freq=m.count||1;
+    const badge=freq>=3?`<span class="mistake-badge mb-red">${currentLang==='tr'?'Çok Sık':'Most Common'} (${freq}x)</span>`:freq>=2?`<span class="mistake-badge mb-amber">${currentLang==='tr'?'Tekrarlanan':'Recurring'} (${freq}x)</span>`:`<span class="mistake-badge mb-purple">${currentLang==='tr'?'1 Kez':'1 Time'}</span>`;
+    const catLabel=m.category==='vocab'?(currentLang==='tr'?'Kelime':'Vocabulary'):m.category==='fill'?(currentLang==='tr'?'Boşluk':'Fill-in'):(currentLang==='tr'?'Dilbilgisi':'Grammar');
+    const tip=currentLang==='tr'?m.tip_tr:m.tip_en;
+    return `<div class="mistake-card">
+      <div class="mistake-card-top">${badge}<span style="font-size:.72rem;color:var(--muted);background:var(--light);padding:3px 8px;border-radius:8px;">${catLabel} · ${currentLang==='tr'?'Sınav':'Exam'} ${m.exam_id||1}</span></div>
+      <div class="mistake-q">${m.question_text}</div>
+      <div class="mistake-answers">
+        <div class="ma-box ma-wrong"><div class="ma-label">${currentLang==='tr'?'Senin Cevabın':'Your Answer'}</div><div class="ma-val">${m.your_answer||'—'}</div></div>
+        <div class="ma-box ma-correct"><div class="ma-label">${currentLang==='tr'?'Doğru Cevap':'Correct Answer'}</div><div class="ma-val">${m.correct_answer||'—'}</div></div>
+      </div>
+      ${tip?`<div class="mistake-tip">💡 ${tip}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════ PREP ═══════════════
+function renderPrep() {
+  if(!currentUser) return;
+  document.getElementById('prep-total-mistakes').textContent = localMistakes.length;
+  document.getElementById('prep-exams-done').textContent = localScores.length;
+  const cats={grammar:0,vocab:0,reading:0,fill:0};
+  localMistakes.forEach(m=>cats[m.category]=(cats[m.category]||0)+(m.count||1));
+  const topCat=Object.entries(cats).sort((a,b)=>b[1]-a[1])[0];
+  const catNames2={grammar:currentLang==='tr'?'Dilbilgisi':'Grammar',vocab:currentLang==='tr'?'Kelime':'Vocabulary',reading:currentLang==='tr'?'Okuma':'Reading',fill:currentLang==='tr'?'Boşluk':'Fill-in'};
+  const topLabel=topCat?catNames2[topCat[0]]||'—':'—';
+  document.getElementById('prep-top-topic').textContent=topLabel;
+  const list=document.getElementById('prep-list');
+  if(!localMistakes.length){
+    list.innerHTML=`<div class="empty-state"><div class="empty-state-icon">📚</div><p>${currentLang==='tr'?'Hazırlık modu için önce bir sınava girin.':'Take an exam first to activate prep mode.'}</p></div>`;
+    return;
+  }
+  const byTopic={};
+  localMistakes.forEach(m=>{
+    if(!byTopic[m.category]) byTopic[m.category]=[];
+    byTopic[m.category].push(m);
+  });
+  const catOrder=['grammar','fill','vocab','reading'];
+  const catNames={grammar:{tr:'Dilbilgisi',en:'Grammar'},fill:{tr:'Boşluk Doldurma',en:'Fill-in-Blank'},vocab:{tr:'Kelime Bilgisi',en:'Vocabulary'},reading:{tr:'Okuma Anlama',en:'Reading'}};
+  list.innerHTML=catOrder.filter(c=>byTopic[c]?.length).map((cat,ci)=>{
+    const items=[...byTopic[cat]].sort((a,b)=>(b.count||1)-(a.count||1)).slice(0,5);
+    const isPriority=ci===0;
+    return `<div style="margin-bottom:24px;">
+      <p class="prep-section-title">${catNames[cat][currentLang]||catNames[cat].tr}
+        ${isPriority?`<span class="prep-priority">${currentLang==='tr'?'ÖNCELİKLİ':'PRIORITY'}</span>`:''}
+      </p>
+      ${items.map(m=>{
+        const tip=currentLang==='tr'?m.tip_tr:m.tip_en;
+        return `<div class="mistake-card" style="border-left:3px solid ${isPriority?'var(--accent)':'var(--gold)'}">
+          <div class="mistake-q" style="margin-bottom:8px">${m.question_text}</div>
+          <div class="mistake-answers">
+            <div class="ma-box ma-wrong"><div class="ma-label">${currentLang==='tr'?'Yanlış':'Wrong'}</div><div class="ma-val">${m.your_answer||'—'}</div></div>
+            <div class="ma-box ma-correct"><div class="ma-label">${currentLang==='tr'?'Doğru':'Correct'}</div><div class="ma-val">${m.correct_answer||'—'}</div></div>
+          </div>
+          ${tip?`<div class="mistake-tip">💡 ${tip}</div>`:''}
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════ SCORES ═══════════════
+function renderScores() {
+  if(!currentUser) return;
+  const list = document.getElementById('scores-list');
+  if(!localScores.length){
+    list.innerHTML=`<div class="history-empty"><div style="font-size:3rem;margin-bottom:12px;">📊</div><p style="color:var(--muted);font-size:.9rem">${currentLang==='tr'?'Henüz sınav geçmişiniz yok. İlk sınavınıza girin!':'No exam history yet. Take your first exam!'}</p></div>`;
+    return;
+  }
+  list.innerHTML=localScores.map(s=>{
+    const pct=s.percentage;
+    const cls=pct>=75?'good':pct>=50?'mid':'low';
+    const secs=s.section_scores||{};
+    const secInfo=Object.entries(secs).map(([k,v])=>`<span class="history-sec">${k}: ${v}</span>`).join('');
+    const dateStr=new Date(s.taken_at).toLocaleDateString(currentLang==='tr'?'tr-TR':'en-GB');
+    return `<div class="history-card">
+      <div class="history-score ${cls}">${pct}%</div>
+      <div class="history-info">
+        <div class="history-exam">${s.exam_title}</div>
+        <div class="history-date">${dateStr} · ${s.total_score} / ${s.max_score} pts</div>
+        <div class="history-sections">${secInfo}</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:8px;">
+          <div class="progress-bar-small"><div class="progress-bar-small-fill" style="width:${pct}%;background:${pct>=75?'var(--green)':pct>=50?'var(--gold)':'var(--accent)'}"></div></div>
+          <span style="font-size:.75rem;color:var(--muted);min-width:35px">${pct}%</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// Init
+setLang('tr');
+document.getElementById('btn-enter-app').addEventListener('click', showAuth);
+document.getElementById('btn-auth-close').addEventListener('click', hideAuth);
+document.getElementById('btn-logout').addEventListener('click', doLogout);
+document.getElementById('land-lang-tr').addEventListener('click', ()=>setLang('tr'));
+document.getElementById('land-lang-en').addEventListener('click', ()=>setLang('en'));
+document.getElementById('reg-pw')?.addEventListener('input', checkPwStrength);
+checkSession();
+</script>
+</body>
+</html>
