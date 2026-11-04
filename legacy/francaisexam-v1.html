@@ -532,7 +532,7 @@ textarea.write-area:focus{outline:none;border-color:var(--gold);}
 <script>
 // ═══════════════ SUPABASE ═══════════════
 const SUPABASE_URL = 'https://rjwuibsvrdlqrouamsnt.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqd3VpYnN2cmRscXJvdWFtc250Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzcyMTEsImV4cCI6MjA5NDc1MzIxMX0.T4eL3ulFEUqZ1GRpq40DVrfiSyt8a-VnperU8XAkN4Y';
+const SUPABASE_ANON_KEY = 'REMOVED'; // key removed from the repository
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ═══════════════ STATE ═══════════════
@@ -621,7 +621,7 @@ async function doRegister(e) {
     email, password: pw,
     options: {
       data: { full_name: name },
-      emailRedirectTo: window.location.href.split('#')[0]
+      emailRedirectTo: 'https://fatemeshahrokhshahi.github.io/French-Exam/francaisexam.html'
     }
   });
   document.getElementById('reg-submit').disabled = false;
