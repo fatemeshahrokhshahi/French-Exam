@@ -4,8 +4,11 @@
   'use strict';
 
   // ───────────────────────── Config ─────────────────────────
-  const SUPABASE_URL = 'https://rjwuibsvrdlqrouamsnt.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqd3VpYnN2cmRscXJvdWFtc250Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzcyMTEsImV4cCI6MjA5NDc1MzIxMX0.T4eL3ulFEUqZ1GRpq40DVrfiSyt8a-VnperU8XAkN4Y';
+  // Supabase credentials are NOT stored in the code. Put them in js/config.js (git-ignored, see js/config.example.js).
+  // Without that file the app runs in guest mode: everything works, only account sync is disabled.
+  const CFG = window.FE_CONFIG || {};
+  const SUPABASE_URL = CFG.supabaseUrl || '';
+  const SUPABASE_ANON_KEY = CFG.supabaseAnonKey || '';
   const PUBLIC_URL = 'https://fatemeshahrokhshahi.github.io/French-Exam/';
   const LEVELS = ['A1', 'A2', 'B1', 'B2'];
   const STORE_KEY = 'fe.v2';
@@ -123,7 +126,7 @@
   // ───────────────────────── Supabase (optional sync) ─────────────────────────
   let sb = null, user = null;
   function initSupabase() {
-    try { if (window.supabase && window.supabase.createClient) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }
+    try { if (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase && window.supabase.createClient) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }
     catch (e) { sb = null; }
   }
   async function refreshUser() {

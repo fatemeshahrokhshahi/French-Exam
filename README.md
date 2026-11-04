@@ -122,7 +122,14 @@ After changing any web file, run `npm run cap:sync` to copy it into the native p
 
 ## Accounts (Supabase, optional)
 
-The app uses the existing Supabase project. To make sure the tables, security rules and the in-app **Delete account** feature exist, run `supabase/schema.sql` once in *Supabase → SQL editor*. In *Authentication → URL configuration*, add `https://fatemeshahrokhshahi.github.io/French-Exam/` to the redirect URLs.
+Supabase credentials are **not stored in the repository**. Without them, the app runs in guest mode: everything works, and only account sync is turned off. To turn accounts on:
+
+- **Locally / your own hosting:** copy `js/config.example.js` to `js/config.js` and fill in your project URL and anon key. `js/config.js` is git-ignored.
+- **Android build (GitHub Actions):** add repository secrets `SUPABASE_URL` and `SUPABASE_ANON_KEY` (*Settings → Secrets and variables → Actions*). The workflow writes `js/config.js` at build time.
+
+Note that any key shipped inside a website or app can be read by its users. Data is protected by the row-level security rules below, not by hiding the key.
+
+ To make sure the tables, security rules and the in-app **Delete account** feature exist, run `supabase/schema.sql` once in *Supabase → SQL editor*. In *Authentication → URL configuration*, add `https://fatemeshahrokhshahi.github.io/French-Exam/` to the redirect URLs.
 
 ## License
 

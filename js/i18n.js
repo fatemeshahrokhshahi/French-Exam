@@ -45,7 +45,7 @@ window.FE_I18N = {
     'set.rate': 'Konuşma hızı', 'set.test': 'Sesi dene', 'set.reset': 'İlerlemeyi sıfırla', 'set.resetConfirm': 'Bu cihazdaki tüm ilerleme silinsin mi?',
     'set.about': 'Hakkında', 'set.disclaimer': 'FrançaisExam bağımsız bir çalışma aracıdır; Hachette (Le Nouveau Taxi!) veya Didier (Édito) ile bağlantılı değildir. Tüm alıştırmalar özgündür ve kitapların seviye/konu sırasını izler. Ders kitabını kullanmaya devam et!',
     'set.noVoice': 'Bu cihazda Fransızca ses bulunamadı. Cihaz ayarlarından bir Fransızca ses ekleyebilirsin.',
-    'set.offline': 'Çevrimdışı: hesap özellikleri kullanılamıyor.', 'set.sync': 'Senkronize edildi',
+    'set.offline': 'Hesaplar yapılandırılmamış veya çevrimdışı: misafir modunda çalışıyorsun.', 'set.sync': 'Senkronize edildi',
     'set.deleteAccount': 'Hesabımı sil', 'set.deleteNote': 'Hesabını ve senkronize edilen tüm verilerini kalıcı olarak siler.', 'set.deleteConfirm': 'Hesabın kalıcı olarak silinsin mi? Bu işlem geri alınamaz.', 'set.deleted': 'Hesabın silindi.',
     'err.fill': 'Tüm alanları doldur.', 'err.pw': 'Şifre en az 8 karakter olmalı.',
     'misc.back': '← Geri', 'misc.saved': 'Kaydedildi', 'misc.loading': 'Yükleniyor…', 'misc.notFound': 'Sayfa bulunamadı.'
@@ -95,7 +95,7 @@ window.FE_I18N = {
     'set.rate': 'Speech speed', 'set.test': 'Test voice', 'set.reset': 'Reset progress', 'set.resetConfirm': 'Delete all progress on this device?',
     'set.about': 'About', 'set.disclaimer': 'FrançaisExam is an independent study tool, not affiliated with Hachette (Le Nouveau Taxi!) or Didier (Édito). All exercises are original and follow the books’ level and topic order. Keep using your textbook!',
     'set.noVoice': 'No French voice found on this device. You can add one in your device settings.',
-    'set.offline': 'Offline: account features unavailable.', 'set.sync': 'Synced',
+    'set.offline': 'Accounts not configured or offline: you are in guest mode.', 'set.sync': 'Synced',
     'set.deleteAccount': 'Delete my account', 'set.deleteNote': 'Permanently deletes your account and all synced data.', 'set.deleteConfirm': 'Permanently delete your account? This cannot be undone.', 'set.deleted': 'Your account has been deleted.',
     'err.fill': 'Please fill in all fields.', 'err.pw': 'Password must be at least 8 characters.',
     'misc.back': '← Back', 'misc.saved': 'Saved', 'misc.loading': 'Loading…', 'misc.notFound': 'Page not found.'
