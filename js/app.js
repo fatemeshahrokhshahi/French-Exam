@@ -4,12 +4,6 @@
   'use strict';
 
   // ───────────────────────── Config ─────────────────────────
-  // Supabase credentials are NOT stored in the code. Put them in js/config.js (git-ignored, see js/config.example.js).
-  // Without that file the app runs in guest mode: everything works, only account sync is disabled.
-  const CFG = window.FE_CONFIG || {};
-  const SUPABASE_URL = CFG.supabaseUrl || '';
-  const SUPABASE_ANON_KEY = CFG.supabaseAnonKey || '';
-  const PUBLIC_URL = 'https://fatemeshahrokhshahi.github.io/French-Exam/';
   const LEVELS = ['A1', 'A2', 'B1', 'B2'];
   const STORE_KEY = 'fe.v2';
   const BOX_DAYS = [0, 1, 3, 7, 16, 35]; // Leitner intervals per box
@@ -123,58 +117,6 @@
     if (b && !b.closest('.q-audio')) { e.preventDefault(); speak(b.dataset.say, b.dataset.slow === '1'); }
   });
 
-  // ───────────────────────── Supabase (optional sync) ─────────────────────────
-  let sb = null, user = null;
-  function initSupabase() {
-    try { if (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase && window.supabase.createClient) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }
-    catch (e) { sb = null; }
-  }
-  async function refreshUser() {
-    if (!sb) return;
-    try {
-      const { data } = await sb.auth.getSession();
-      const s = data && data.session;
-      user = s ? { id: s.user.id, email: s.user.email, name: (s.user.user_metadata && s.user.user_metadata.full_name) || s.user.email.split('@')[0] } : null;
-      if (user) await pullRemote();
-    } catch (e) { /* offline */ }
-  }
-  async function pullRemote() {
-    if (!sb || !user) return;
-    try {
-      const [m, s] = await Promise.all([
-        sb.from('mistakes').select('*').eq('user_id', user.id),
-        sb.from('scores').select('*').eq('user_id', user.id).order('taken_at', { ascending: false })
-      ]);
-      (m.data || []).forEach(r => {
-        if (!QINDEX[r.question_id]) return;
-        const loc = S.mistakes[r.question_id];
-        if (!loc || (r.count || 0) > loc.count) S.mistakes[r.question_id] = { qid: r.question_id, count: r.count || 1, given: r.your_answer, last: r.last_seen_at };
-      });
-      const have = new Set(S.scores.map(x => x.exam_id + '|' + x.taken_at));
-      (s.data || []).forEach(r => { if (!have.has(r.exam_id + '|' + r.taken_at)) S.scores.push(r); });
-      S.scores.sort((a, b) => String(b.taken_at).localeCompare(String(a.taken_at)));
-      save();
-    } catch (e) { /* ignore */ }
-  }
-  function pushMistake(qid) {
-    if (!sb || !user) return;
-    const m = S.mistakes[qid]; const info = QINDEX[qid]; if (!m || !info) return;
-    const q = info.q;
-    sb.from('mistakes').upsert({
-      user_id: user.id, question_id: qid, question_text: qText(q), your_answer: m.given, correct_answer: expected(q),
-      category: q.t, exam_id: info.src, tip_tr: (q.x && q.x.tr) || '', tip_en: (q.x && q.x.en) || '',
-      count: m.count, last_seen_at: m.last
-    }, { onConflict: 'user_id,question_id' }).then(() => {}, () => {});
-  }
-  function deleteRemoteMistake(qid) {
-    if (!sb || !user) return;
-    sb.from('mistakes').delete().eq('user_id', user.id).eq('question_id', qid).then(() => {}, () => {});
-  }
-  function pushScore(entry) {
-    if (!sb || !user) return;
-    sb.from('scores').insert(Object.assign({ user_id: user.id }, entry)).then(() => {}, () => {});
-  }
-
   // ───────────────────────── Theme & language ─────────────────────────
   function applyTheme() {
     const root = document.documentElement;
@@ -197,9 +139,7 @@
   function route() {
     if (cleanup) { try { cleanup(); } catch (e) {} cleanup = null; }
     if ('speechSynthesis' in window) speechSynthesis.cancel();
-    // Supabase auth redirects put tokens in the hash (#access_token=…); treat those as the home screen.
-    const raw = /access_token=|error_description=|type=recovery/.test(location.hash) ? '' : location.hash;
-    const parts = (raw.replace(/^#\/?/, '') || '').split('/').filter(Boolean);
+    const parts = (location.hash.replace(/^#\/?/, '') || '').split('/').filter(Boolean);
     const view = $('#view');
     const [p0, p1, p2] = parts;
     let nav = 'home';
@@ -233,7 +173,7 @@
   }
 
   function renderHome(view) {
-    const name = user ? user.name : t('home.guest');
+    const name = t('home.guest');
     const last = S.lastUnit && UNIT[S.lastUnit];
     const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone;
     const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
@@ -461,9 +401,9 @@
     if (!res.ok) {
       const m = S.mistakes[q.id] || { qid: q.id, count: 0 };
       m.count++; m.given = res.given; m.last = new Date().toISOString();
-      S.mistakes[q.id] = m; save(); pushMistake(q.id);
+      S.mistakes[q.id] = m;
     } else if (S.mistakes[q.id] && recordAnswer.clearOnCorrect) {
-      delete S.mistakes[q.id]; deleteRemoteMistake(q.id);
+      delete S.mistakes[q.id];
     }
     save();
   }
@@ -596,7 +536,6 @@
       const pct = max ? Math.round(total / max * 100) : 0;
       const entry = { exam_id: ex.id, exam_title: ex.title, total_score: total, max_score: max, percentage: pct, section_scores: per, taken_at: new Date().toISOString(), level: lv };
       S.scores.unshift(entry); save();
-      pushScore({ exam_id: entry.exam_id, exam_title: entry.exam_title, total_score: total, max_score: max, percentage: pct, section_scores: per, taken_at: entry.taken_at });
       const model = $('#ex-model'); if (model) model.hidden = false;
       const grade = pct >= 90 ? 'a' : pct >= 75 ? 'b' : pct >= 60 ? 'c' : pct >= 50 ? 'd' : 'e';
       const secName = k => { const s = ex.sections.find(x => x.key === k); return s ? L(s.name) : k; };
@@ -711,24 +650,10 @@
     </section>`;
   }
 
-  // ───────────────────────── Views: Settings / account ─────────────────────────
+  // ───────────────────────── Views: Settings ─────────────────────────
   function renderSettings(view) {
-    const accountHtml = !sb ? `<p class="muted">${t('set.offline')}</p>` : user ? `
-        <p>${t('set.loggedAs')} <b>${esc(user.name)}</b><br><small class="muted">${esc(user.email)}</small></p>
-        <div class="row-gap"><button class="btn ghost" id="logout">${t('set.logout')}</button><button class="btn ghost bad-t" id="del-acc">${t('set.deleteAccount')}</button></div>
-        <p class="muted small">${t('set.deleteNote')}</p>` : `
-        <p class="muted">${t('set.guestNote')}</p>
-        <div class="seg wide" role="tablist"><button class="on" data-auth="login">${t('set.login')}</button><button data-auth="register">${t('set.register')}</button></div>
-        <form id="auth-form" class="form" autocomplete="on">
-          <label class="reg-only" hidden>${t('set.name')}<input name="name" autocomplete="name"></label>
-          <label>${t('set.email')}<input name="email" type="email" autocomplete="email" required></label>
-          <label>${t('set.password')}<input name="password" type="password" autocomplete="current-password" minlength="8" required></label>
-          <p class="form-msg" id="auth-msg" role="alert"></p>
-          <button class="btn block" id="auth-submit">${t('set.login')}</button>
-        </form>`;
     view.innerHTML = `<section class="wrap narrow">
       <h1 class="title">${t('set.title')}</h1>
-      <div class="card"><h2>${t('set.account')}</h2>${accountHtml}</div>
       <div class="card settings">
         <div class="set-row"><span>${t('set.lang')}</span><div class="seg"><button data-lang="tr" class="${S.lang === 'tr' ? 'on' : ''}">Türkçe</button><button data-lang="en" class="${S.lang === 'en' ? 'on' : ''}">English</button></div></div>
         <div class="set-row"><span>${t('set.theme')}</span><div class="seg">${['auto', 'light', 'dark'].map(x => `<button data-theme-set="${x}" class="${S.theme === x ? 'on' : ''}">${t('set.' + x)}</button>`).join('')}</div></div>
@@ -742,60 +667,13 @@
     $('#rate').oninput = e => { S.rate = +e.target.value; $('#rate-v').textContent = S.rate.toFixed(2); save(); };
     $('#test-voice').onclick = () => speak('Bonjour ! Bienvenue sur FrançaisExam. Bon courage pour votre examen.');
     $('#reset').onclick = () => { if (confirm(t('set.resetConfirm'))) { const keep = { lang: S.lang, theme: S.theme, rate: S.rate }; S = Object.assign(defaults(), keep); save(); toast(t('misc.saved')); route(); } };
-    if (!sb) return;
-    if (user) {
-      $('#logout').onclick = async () => { try { await sb.auth.signOut(); } catch (e) {} user = null; route(); };
-      $('#del-acc').onclick = async () => {
-        if (!confirm(t('set.deleteConfirm'))) return;
-        const { error } = await sb.rpc('delete_user');
-        if (error) { toast('❌ ' + error.message); return; }
-        try { await sb.auth.signOut(); } catch (e) {}
-        user = null; toast(t('set.deleted')); route();
-      };
-      return;
-    }
-    let mode = 'login';
-    $$('[data-auth]').forEach(b => b.onclick = () => {
-      mode = b.dataset.auth;
-      $$('[data-auth]').forEach(x => x.classList.toggle('on', x === b));
-      $('.reg-only').hidden = mode !== 'register';
-      $('#auth-submit').textContent = t(mode === 'login' ? 'set.login' : 'set.register');
-      $('input[name=password]').autocomplete = mode === 'login' ? 'current-password' : 'new-password';
-    });
-    $('#auth-form').onsubmit = async (e) => {
-      e.preventDefault();
-      const f = new FormData(e.target), msg = $('#auth-msg');
-      const email = String(f.get('email') || '').trim(), pw = String(f.get('password') || ''), name = String(f.get('name') || '').trim();
-      msg.className = 'form-msg';
-      if (!email || !pw || (mode === 'register' && !name)) { msg.textContent = t('err.fill'); return; }
-      if (pw.length < 8) { msg.textContent = t('err.pw'); return; }
-      const btn = $('#auth-submit'); btn.disabled = true; msg.textContent = t('misc.loading');
-      try {
-        if (mode === 'login') {
-          const { error } = await sb.auth.signInWithPassword({ email, password: pw });
-          if (error) throw error;
-        } else {
-          const redirect = /^https?:/.test(location.protocol) && !isNative ? location.href.split('#')[0] : PUBLIC_URL;
-          const { data, error } = await sb.auth.signUp({ email, password: pw, options: { data: { full_name: name }, emailRedirectTo: redirect } });
-          if (error) throw error;
-          if (!data.session) { msg.className = 'form-msg ok'; msg.textContent = t('set.checkEmail'); btn.disabled = false; return; }
-        }
-        await refreshUser();
-        toast(t('set.sync')); route();
-      } catch (err) { msg.textContent = '❌ ' + (err.message || err); btn.disabled = false; }
-    };
   }
 
   // ───────────────────────── Boot ─────────────────────────
   function boot() {
     applyTheme(); applyLang();
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
-    initSupabase();
     route();
-    // Only re-render screens that show account data, so an auth event never wipes a running quiz or exam.
-    const softRoute = () => { const hs = location.hash; if (!hs || hs === '#/' || hs.startsWith('#/settings')) route(); };
-    refreshUser().then(() => { if (user) softRoute(); });
-    if (sb) sb.auth.onAuthStateChange((ev) => { if (ev === 'SIGNED_IN' || ev === 'SIGNED_OUT') refreshUser().then(softRoute); });
     if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol) && !isNative) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
     }

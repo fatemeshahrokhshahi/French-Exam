@@ -20,7 +20,7 @@ A study platform for French exams that runs as a **website**, an **installable a
 - **Flashcards with spaced repetition** (Leitner boxes), filled automatically from the units you study.
 - **Mistake tracker**: re-practise the questions you got wrong. Each one is cleared when you answer it correctly.
 - **Progress**: streak, accuracy, unit completion and exam history.
-- **Guest mode**: everything works without an account and progress is saved on the device. Optional Supabase accounts sync progress across devices and can be deleted from inside the app.
+- **No account needed**: progress is saved on the device.
 - Turkish/English interface, light and dark mode, works offline, fits phone screens and iPhone notches.
 
 ## Project structure
@@ -31,11 +31,8 @@ css/style.css           styles (light + dark)
 js/app.js               router, exercises, exams, flashcards, sync
 js/i18n.js              interface text (TR / EN)
 js/content/a1.js … b2.js   course content: units, vocabulary, quizzes, exams
-js/vendor/              supabase-js (bundled so the app also works offline)
 manifest.webmanifest, sw.js, icons/   PWA / installable app
 capacitor.config.json, scripts/, resources/   native iOS/Android packaging
-supabase/schema.sql     database tables + row-level security + delete_user()
-legacy/                 the previous single-file version
 ```
 
 ### Adding content
@@ -58,7 +55,7 @@ The site is static, so no build step is needed:
 npx http-server . -p 8080
 ```
 
-Then open http://localhost:8080. On GitHub Pages, the site is served from `index.html` at the repository root. The old `francaisexam.html` address forwards to the new app, so earlier sign-up confirmation links still work.
+Then open http://localhost:8080. On GitHub Pages, the site is served from `index.html` at the repository root. The old `francaisexam.html` address forwards to the new app.
 
 ## Mobile apps
 
@@ -119,17 +116,6 @@ npm run ios
 In Xcode, pick your Team under *Signing & Capabilities*, then use *Product → Archive* and upload to App Store Connect / TestFlight. This needs an Apple Developer account ($99/year).
 
 After changing any web file, run `npm run cap:sync` to copy it into the native projects.
-
-## Accounts (Supabase, optional)
-
-Supabase credentials are **not stored in the repository**. Without them, the app runs in guest mode: everything works, and only account sync is turned off. To turn accounts on:
-
-- **Locally / your own hosting:** copy `js/config.example.js` to `js/config.js` and fill in your project URL and anon key. `js/config.js` is git-ignored.
-- **Android build (GitHub Actions):** add repository secrets `SUPABASE_URL` and `SUPABASE_ANON_KEY` (*Settings → Secrets and variables → Actions*). The workflow writes `js/config.js` at build time.
-
-Note that any key shipped inside a website or app can be read by its users. Data is protected by the row-level security rules below, not by hiding the key.
-
- To make sure the tables, security rules and the in-app **Delete account** feature exist, run `supabase/schema.sql` once in *Supabase → SQL editor*. In *Authentication → URL configuration*, add `https://fatemeshahrokhshahi.github.io/French-Exam/` to the redirect URLs.
 
 ## License
 
