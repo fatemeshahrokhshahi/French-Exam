@@ -1,0 +1,8 @@
+{
+  "appId": "io.github.fatemeshahrokhshahi.francaisexam",
+  "appName": "FrançaisExam",
+  "webDir": "www",
+  "backgroundColor": "#1a1a2e",
+  "ios": { "contentInset": "never" },
+  "android": { "allowMixedContent": false }
+}
