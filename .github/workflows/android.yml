@@ -11,6 +11,9 @@ permissions:
 jobs:
   build-apk:
     runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
     steps:
       - uses: actions/checkout@v4
 
@@ -28,11 +31,9 @@ jobs:
         run: npm ci
 
       - name: Add Supabase config from repository secrets (optional)
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         if: env.SUPABASE_URL != '' && env.SUPABASE_ANON_KEY != ''
-        run: printf "window.FE_CONFIG = { supabaseUrl: '%s', supabaseAnonKey: '%s' };\n" "$SUPABASE_URL" "$SUPABASE_ANON_KEY" > js/config.js
+        run: |
+          printf "window.FE_CONFIG = { supabaseUrl: '%s', supabaseAnonKey: '%s' };\n" "$SUPABASE_URL" "$SUPABASE_ANON_KEY" > js/config.js
 
       - name: Build web app and create the Android project
         run: |
