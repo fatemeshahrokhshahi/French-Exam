@@ -1,7 +1,7 @@
 /* UI strings. Course content carries its own tr/en fields. */
 window.FE_I18N = {
   tr: {
-    'nav.home': 'Ana sayfa', 'nav.cards': 'Kartlar', 'nav.mistakes': 'Hatalar', 'nav.progress': 'İlerleme', 'nav.settings': 'Profil',
+    'nav.home': 'Ana sayfa', 'nav.cards': 'Kartlar', 'nav.mistakes': 'Hatalar', 'nav.progress': 'İlerleme', 'nav.settings': 'Ayarlar',
     'home.hello': 'Bonjour', 'home.guest': 'misafir',
     'home.sub': 'A1’den B2’ye Fransızca: dersler, sesli kelimeler, alıştırmalar ve DELF tarzı deneme sınavları.',
     'home.streak': 'günlük seri', 'home.due': 'tekrar edilecek kart', 'home.mist': 'kayıtlı hata', 'home.exams': 'sınav sonucu',
@@ -38,20 +38,15 @@ window.FE_I18N = {
     'mist.yours': 'Senin cevabın', 'mist.right': 'Doğru cevap',
     'prog.title': 'İlerleme', 'prog.units': 'ünite tamamlandı', 'prog.history': 'Sınav geçmişi', 'prog.noScores': 'Henüz sınav sonucu yok.',
     'prog.words': 'öğrenilen kelime', 'prog.answered': 'cevaplanan soru', 'prog.accuracy': 'doğruluk',
-    'set.title': 'Profil ve ayarlar', 'set.account': 'Hesap', 'set.guestNote': 'Misafir olarak kullanıyorsun. İlerlemen bu cihazda saklanır. Hesap açarak cihazlar arasında senkronize et.',
-    'set.login': 'Giriş yap', 'set.register': 'Kayıt ol', 'set.logout': 'Çıkış yap', 'set.name': 'Ad Soyad', 'set.email': 'E-posta', 'set.password': 'Şifre (en az 8 karakter)',
-    'set.loggedAs': 'Giriş yapıldı:', 'set.checkEmail': 'Onay e-postası gönderildi. Bağlantıya tıkla, sonra giriş yap.',
+    'set.title': 'Ayarlar',
     'set.lang': 'Arayüz dili', 'set.theme': 'Tema', 'set.auto': 'Otomatik', 'set.light': 'Açık', 'set.dark': 'Koyu',
     'set.rate': 'Konuşma hızı', 'set.test': 'Sesi dene', 'set.reset': 'İlerlemeyi sıfırla', 'set.resetConfirm': 'Bu cihazdaki tüm ilerleme silinsin mi?',
     'set.about': 'Hakkında', 'set.disclaimer': 'FrançaisExam bağımsız bir çalışma aracıdır; Hachette (Le Nouveau Taxi!) veya Didier (Édito) ile bağlantılı değildir. Tüm alıştırmalar özgündür ve kitapların seviye/konu sırasını izler. Ders kitabını kullanmaya devam et!',
     'set.noVoice': 'Bu cihazda Fransızca ses bulunamadı. Cihaz ayarlarından bir Fransızca ses ekleyebilirsin.',
-    'set.offline': 'Hesaplar yapılandırılmamış veya çevrimdışı: misafir modunda çalışıyorsun.', 'set.sync': 'Senkronize edildi',
-    'set.deleteAccount': 'Hesabımı sil', 'set.deleteNote': 'Hesabını ve senkronize edilen tüm verilerini kalıcı olarak siler.', 'set.deleteConfirm': 'Hesabın kalıcı olarak silinsin mi? Bu işlem geri alınamaz.', 'set.deleted': 'Hesabın silindi.',
-    'err.fill': 'Tüm alanları doldur.', 'err.pw': 'Şifre en az 8 karakter olmalı.',
     'misc.back': '← Geri', 'misc.saved': 'Kaydedildi', 'misc.loading': 'Yükleniyor…', 'misc.notFound': 'Sayfa bulunamadı.'
   },
   en: {
-    'nav.home': 'Home', 'nav.cards': 'Cards', 'nav.mistakes': 'Mistakes', 'nav.progress': 'Progress', 'nav.settings': 'Profile',
+    'nav.home': 'Home', 'nav.cards': 'Cards', 'nav.mistakes': 'Mistakes', 'nav.progress': 'Progress', 'nav.settings': 'Settings',
     'home.hello': 'Bonjour', 'home.guest': 'guest',
     'home.sub': 'French from A1 to B2: lessons, vocabulary with audio, exercises and DELF-style mock exams.',
     'home.streak': 'day streak', 'home.due': 'cards to review', 'home.mist': 'saved mistakes', 'home.exams': 'exam results',
@@ -88,16 +83,11 @@ window.FE_I18N = {
     'mist.yours': 'Your answer', 'mist.right': 'Correct answer',
     'prog.title': 'Progress', 'prog.units': 'units completed', 'prog.history': 'Exam history', 'prog.noScores': 'No exam results yet.',
     'prog.words': 'words learned', 'prog.answered': 'questions answered', 'prog.accuracy': 'accuracy',
-    'set.title': 'Profile & settings', 'set.account': 'Account', 'set.guestNote': 'You are using the app as a guest. Progress is saved on this device. Create an account to sync across devices.',
-    'set.login': 'Log in', 'set.register': 'Sign up', 'set.logout': 'Log out', 'set.name': 'Full name', 'set.email': 'Email', 'set.password': 'Password (min. 8 characters)',
-    'set.loggedAs': 'Logged in as', 'set.checkEmail': 'Confirmation email sent. Click the link, then log in.',
+    'set.title': 'Settings',
     'set.lang': 'Interface language', 'set.theme': 'Theme', 'set.auto': 'Auto', 'set.light': 'Light', 'set.dark': 'Dark',
     'set.rate': 'Speech speed', 'set.test': 'Test voice', 'set.reset': 'Reset progress', 'set.resetConfirm': 'Delete all progress on this device?',
     'set.about': 'About', 'set.disclaimer': 'FrançaisExam is an independent study tool, not affiliated with Hachette (Le Nouveau Taxi!) or Didier (Édito). All exercises are original and follow the books’ level and topic order. Keep using your textbook!',
     'set.noVoice': 'No French voice found on this device. You can add one in your device settings.',
-    'set.offline': 'Accounts not configured or offline: you are in guest mode.', 'set.sync': 'Synced',
-    'set.deleteAccount': 'Delete my account', 'set.deleteNote': 'Permanently deletes your account and all synced data.', 'set.deleteConfirm': 'Permanently delete your account? This cannot be undone.', 'set.deleted': 'Your account has been deleted.',
-    'err.fill': 'Please fill in all fields.', 'err.pw': 'Password must be at least 8 characters.',
     'misc.back': '← Back', 'misc.saved': 'Saved', 'misc.loading': 'Loading…', 'misc.notFound': 'Page not found.'
   }
 };
